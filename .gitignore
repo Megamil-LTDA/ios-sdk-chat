@@ -1,0 +1,54 @@
+# Mac OS
+.DS_Store
+
+# Xcode
+build/
+DerivedData/
+*.xcworkspace
+*.xcuserstate
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/*
+
+# Swift Package Manager
+/.build/
+Package.resolved
+
+# Cocoapods
+Pods/
+Podfile.lock
+
+# Carthage
+Carthage/Build/
+
+# Archives
+*.xcarchive
+
+# Simulator
+*.app
+*.ipa
+
+# SwiftUI Preview
+*.preview.svg
+
+# Other
+*.swp
+*.swm
+*.swo
+*.lock
+*.tmp
+
+# Logs
+*.log
+
+# Local configurations
+*.xcuserdatad/
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+*.pbxuser
+*.xcuserdatad/
+
+# Build settings
+*.xcscheme
+*.xcschemes/
