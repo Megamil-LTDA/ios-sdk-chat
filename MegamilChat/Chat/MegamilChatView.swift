@@ -1,12 +1,12 @@
-    //
-    //  ContentView.swift
-    //  sample_megamil_chat_ios
-    //
-    //  Created by Eduardo dos santos on 01/11/24.
-    //
+//
+//  ContentView.swift
+//  sample_megamil_chat_ios
+//
+//  Created by Eduardo dos santos on 01/11/24.
+//
 import SwiftUI
 
-struct MegamilChatView: View {
+public struct MegamilChatView: View {
     @State private var animate = true
     @State private var dragOffsetY: CGFloat = 0
     @GestureState private var isDragging = false
@@ -24,7 +24,26 @@ struct MegamilChatView: View {
     var presentationStyle: PresentationStyle = .fullscreen
     var onClose: (() -> Void)?
     
-    var body: some View {
+    // Inicializador público para a estrutura
+    public init(
+        backgroundColor: Color = .white,
+        canDragging: Bool = true,
+        showBorder: Bool = true,
+        showReturnButton: Bool = true,
+        themName: String = "",
+        presentationStyle: PresentationStyle = .fullscreen,
+        onClose: (() -> Void)? = nil
+    ) {
+        self.backgroundColor = backgroundColor
+        self.canDragging = canDragging
+        self.showBorder = showBorder
+        self.showReturnButton = showReturnButton
+        self.themName = themName
+        self.presentationStyle = presentationStyle
+        self.onClose = onClose
+    }
+    
+    public var body: some View {
         ZStack {
             contentView()
         }
@@ -124,7 +143,7 @@ struct MegamilChatView: View {
                 }
                 .scaleEffect(y: -1)
                 .padding(.top, 10)
-                .onChange(of: messages) { newMessages, oldMessages in
+                .onChange(of: messages) { newMessages in
                     if let lastMessageIndex = newMessages.indices.last {
                         withAnimation {
                             scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)

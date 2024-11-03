@@ -6,7 +6,7 @@
 //
 import SwiftUI
 
-enum PresentationStyle {
+public enum PresentationStyle {
     case fullscreen
     case largeBottomSheet
     case mediumBottomSheet

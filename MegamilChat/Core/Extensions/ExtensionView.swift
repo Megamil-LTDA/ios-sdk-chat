@@ -32,7 +32,7 @@ extension View {
         return topInset > 20
     }
     
-    func fullScreenModal<Content: View>(
+    public func fullScreenModal<Content: View>(
         isPresented: Binding<Bool>,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
