@@ -1,6 +1,5 @@
 //
 //  ExtensionView.swift
-//  sample_megamil_chat_ios
 //
 //  Created by Eduardo dos santos on 01/11/24.
 //
@@ -37,15 +36,13 @@ extension View {
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         ZStack {
-            self // A view de fundo que fica atrás do modal
-            
+            self
             if isPresented.wrappedValue {
                 content()
-                    .background(Color.black.opacity(0.4)) // Adiciona um fundo com opacidade ao modal
-                    .transition(.opacity.animation(.easeInOut(duration: 0.3))) // Efeito de transição suave
-                    .zIndex(1) // Garante que o modal fique acima da view de fundo
+                    .background(Color.black.opacity(0.4))
+                    .transition(.opacity.animation(.easeInOut(duration: 0.3)))
+                    .zIndex(1)
                     .onTapGesture {
-                            // Fechar o modal ao tocar fora
                         isPresented.wrappedValue = false
                     }
             }
@@ -83,7 +80,7 @@ extension View {
                     withAnimation(.spring(response: 0.3, dampingFraction: 0.6)) {
                         dragOffsetY.wrappedValue = UIScreen.main.bounds.height
                     }
-                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) { // Espera a animação terminar
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 0.1) {
                         onClose()
                     }
                 } else {

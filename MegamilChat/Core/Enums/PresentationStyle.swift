@@ -1,6 +1,5 @@
 //
 //  PresentationStyle.swift
-//  sample_megamil_chat_ios
 //
 //  Created by Eduardo dos santos on 01/11/24.
 //

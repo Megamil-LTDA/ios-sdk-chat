@@ -13,7 +13,6 @@ class HomeViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-            // Configurações iniciais, se necessário
     }
     
     @IBAction func openFullScreenChat(_ sender: UIButton) {

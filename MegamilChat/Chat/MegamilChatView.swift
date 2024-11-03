@@ -1,6 +1,5 @@
 //
 //  ContentView.swift
-//  sample_megamil_chat_ios
 //
 //  Created by Eduardo dos santos on 01/11/24.
 //
@@ -11,7 +10,7 @@ public struct MegamilChatView: View {
     @State private var dragOffsetY: CGFloat = 0
     @GestureState private var isDragging = false
     @State private var messageText: String = ""
-    @State private var messages: [String] = []
+    @State private var messages: [ChatMessage] = []
     
     private var safeAreaHeight: CGFloat { (hasNotch() && !presentationStyle.isFullScreen) ? 34.0 : 0 }
     private var cornerRadius: CGFloat { hasNotch() ? (presentationStyle == .floating ? 32 : 60) : 0 }
@@ -24,7 +23,6 @@ public struct MegamilChatView: View {
     var presentationStyle: PresentationStyle = .fullscreen
     var onClose: (() -> Void)?
     
-    // Inicializador público para a estrutura
     public init(
         backgroundColor: Color = .white,
         canDragging: Bool = true,
@@ -32,7 +30,8 @@ public struct MegamilChatView: View {
         showReturnButton: Bool = true,
         themName: String = "",
         presentationStyle: PresentationStyle = .fullscreen,
-        onClose: (() -> Void)? = nil
+        onClose: (() -> Void)? = nil,
+        messages: [ChatMessage] = []
     ) {
         self.backgroundColor = backgroundColor
         self.canDragging = canDragging
@@ -41,6 +40,7 @@ public struct MegamilChatView: View {
         self.themName = themName
         self.presentationStyle = presentationStyle
         self.onClose = onClose
+        _messages = State(initialValue: messages)
     }
     
     public var body: some View {
@@ -50,6 +50,9 @@ public struct MegamilChatView: View {
         .padding(.all, presentationStyle == .floating ? 32 : 0)
         .padding(.bottom, -safeAreaHeight)
         .onTapGesture {}
+        .onAppear() {
+            
+        }
     }
     
     private func contentView() -> some View {
@@ -127,13 +130,16 @@ public struct MegamilChatView: View {
                 LazyVStack(alignment: .leading) {
                     ForEach(messages.indices.reversed(), id: \.self) { index in
                         HStack {
-                            MessageBubble(text: messages[index], backgroundColor: .blue, textColor: .white, isFromMe: true, timestamp: "Agora")
-                                .frame(maxWidth: .infinity, alignment: .trailing)
-                                .scaleEffect(y: -1)
-                            
-                                // MessageBubble(text: "\(themName): \(messages[index])", backgroundColor: .green, textColor: .white, isFromMe: false, timestamp: "02/11/2024 15:00")
-                                //     .frame(maxWidth: .infinity, alignment: .leading)
-                                //     .scaleEffect(y: -1)
+                            let message = messages[index]
+                            if(message.isFromMe) {
+                                MessageBubble(message: message, backgroundColor: .blue, textColor: .white)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .scaleEffect(y: -1)
+                            } else {
+                                MessageBubble(message: message, backgroundColor: .green, textColor: .white)
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .scaleEffect(y: -1)
+                            }
                             
                             Spacer()
                         }
@@ -166,7 +172,7 @@ public struct MegamilChatView: View {
             borderWidth: 1,
             onSend: {
                 if !messageText.isEmpty {
-                    messages.append(messageText)
+                    messages.append(ChatMessage(text: messageText, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))
                     messageText = ""
                 }
             },
@@ -174,7 +180,7 @@ public struct MegamilChatView: View {
                 print("Iniciar gravação de áudio")
             },
             onKeyboardOpen: { isOpen in
-                    // Placeholder for keyboard open logic
+                print("Teclado aberto")
             },
             allowAudioRecording: true
         )

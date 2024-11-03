@@ -1,6 +1,5 @@
 //
 //  DraggableView.swift
-//  sample_megamil_chat_ios
 //
 //  Created by Eduardo dos santos on 02/11/24.
 //

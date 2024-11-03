@@ -60,7 +60,16 @@ struct HomeView: View {
                             presentationStyle: presentationStyle,
                             onClose: {
                                 isChatViewActive = false
-                            }
+                            },
+                            messages: [
+                                ChatMessage(text: "Ping 1", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+                                ChatMessage(text: "Pong 1", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
+                                ChatMessage(text: "Ping 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+                                ChatMessage(text: "Pong 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
+                                ChatMessage(text: "Pong 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+                                ChatMessage(text: "Pong 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
+                                ChatMessage(text: "Pong 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+                            ]
                         )
                     }
                 }

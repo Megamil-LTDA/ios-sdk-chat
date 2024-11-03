@@ -1,21 +1,22 @@
 //
 //  MessageBubble.swift
-//  sample_megamil_chat_ios
 //
 //  Created by Eduardo dos santos on 02/11/24.
 //
 import SwiftUI
 
 struct MessageBubble: View {
-    var text: String
+    var message: ChatMessage
     var backgroundColor: Color
     var textColor: Color
-    var isFromMe: Bool
-    var timestamp: String
     
     var body: some View {
-        VStack(alignment: isFromMe ? .trailing : .leading) {
-            MessageContent(text: text, timestamp: timestamp, backgroundColor: backgroundColor, textColor: textColor, isFromMe: isFromMe)
+        VStack(alignment: message.isFromMe ? .trailing : .leading) {
+            MessageContent(text: message.text,
+                           timestamp: message.timestamp,
+                           backgroundColor: backgroundColor,
+                           textColor: textColor,
+                           isFromMe: message.isFromMe)
         }
         .padding(.bottom, 4)
     }
@@ -30,7 +31,6 @@ struct MessageContent: View {
     
     var body: some View {
         VStack(alignment: isFromMe ? .trailing : .leading) {
-            
             Text(timestamp)
                 .font(.footnote)
                 .foregroundColor(.white)
