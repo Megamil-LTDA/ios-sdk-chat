@@ -19,11 +19,11 @@ public enum PresentationStyle {
             case .mediumBottomSheet:
                 return UIScreen.main.bounds.height * 0.75
             case .smallBottomSheet:
-                return UIScreen.main.bounds.height * 0.5
+                return UIScreen.main.bounds.height * 0.6
             case .fullscreen:
                 return UIScreen.main.bounds.height
             case .floating:
-                return UIScreen.main.bounds.height - 128
+                return UIScreen.main.bounds.height - 120
         }
     }
     

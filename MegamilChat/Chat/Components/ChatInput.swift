@@ -16,7 +16,7 @@ struct ChatInput: View {
     var borderWidth: CGFloat = 8.0
     var onSend: () -> Void
     var onRecord: () -> Void
-    var onKeyboardOpen: (Bool) -> Void // Callback para notificar abertura ou fechamento do teclado
+    var onKeyboardOpen: (Bool) -> Void
     var allowAudioRecording: Bool = true
     
     @State private var keyboardIsVisible = false

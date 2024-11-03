@@ -4,6 +4,7 @@
 //  Created by Eduardo dos santos on 01/11/24.
 //
 import SwiftUI
+import Combine
 
 public struct MegamilChatView: View {
     @State private var animate = true
@@ -11,6 +12,7 @@ public struct MegamilChatView: View {
     @GestureState private var isDragging = false
     @State private var messageText: String = ""
     @State private var messages: [ChatMessage] = []
+    @State private var keyboardHeight: CGFloat = 0
     
     private var safeAreaHeight: CGFloat { (hasNotch() && !presentationStyle.isFullScreen) ? 34.0 : 0 }
     private var cornerRadius: CGFloat { hasNotch() ? (presentationStyle == .floating ? 32 : 60) : 0 }
@@ -48,10 +50,13 @@ public struct MegamilChatView: View {
             contentView()
         }
         .padding(.all, presentationStyle == .floating ? 32 : 0)
-        .padding(.bottom, -safeAreaHeight)
+        .padding(.bottom, keyboardHeight > 0 ? keyboardHeight : -safeAreaHeight)
         .onTapGesture {}
         .onAppear() {
-            
+            self.setupKeyboardObservers()
+        }
+        .onDisappear() {
+            self.removeKeyboardObservers()
         }
     }
     
@@ -171,16 +176,16 @@ public struct MegamilChatView: View {
             showBorder: true,
             borderWidth: 1,
             onSend: {
-                if !messageText.isEmpty {
+                if !messageText.isEmpty && messageText != "" {
                     messages.append(ChatMessage(text: messageText, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))
                     messageText = ""
                 }
             },
             onRecord: {
-                print("Iniciar gravação de áudio")
+                SafePrint("Iniciar gravação de áudio")
             },
             onKeyboardOpen: { isOpen in
-                print("Teclado aberto")
+                SafePrint("Teclado aberto")
             },
             allowAudioRecording: true
         )
@@ -196,16 +201,39 @@ public struct MegamilChatView: View {
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
         .offset(y: dragOffsetY)
     }
-}
-
-struct MegamilChatViewPreviews: PreviewProvider {
-    static var previews: some View {
-        MegamilChatView(
-            backgroundColor: .white,
-            canDragging: false,
-            showBorder: true,
-            presentationStyle: .largeBottomSheet,
-            onClose: {}
-        )
+    
+    private func setupKeyboardObservers() {
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
+            if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
+                var fixHeight = 0.0
+                switch presentationStyle {
+                    case .fullscreen:
+                        fixHeight = 0.0
+                        SafePrint("fullscreen")
+                    case .floating:
+                        fixHeight = 30.0
+                        SafePrint("floating")
+                    case .largeBottomSheet:
+                        fixHeight = 60.0
+                        SafePrint("largeBottomSheet")
+                    case .mediumBottomSheet:
+                        fixHeight = 100.0
+                        SafePrint("mediumBottomSheet")
+                    case .smallBottomSheet:
+                        fixHeight = 240.0
+                        SafePrint("smallBottomSheet")
+                }
+                keyboardHeight = keyboardFrame.height - fixHeight
+            }
+        }
+        
+        NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillHideNotification, object: nil, queue: .main) { _ in
+            keyboardHeight = 0
+        }
+    }
+    
+    private func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 }
