@@ -24,6 +24,7 @@ public struct MegamilChatView: View {
     var themName: String = ""
     var presentationStyle: PresentationStyle = .fullscreen
     var onClose: (() -> Void)?
+    var viewModel: ChatViewModel
     
     public init(
         backgroundColor: Color = .white,
@@ -33,7 +34,15 @@ public struct MegamilChatView: View {
         themName: String = "",
         presentationStyle: PresentationStyle = .fullscreen,
         onClose: (() -> Void)? = nil,
-        messages: [ChatMessage] = []
+        messages: [ChatMessage] = [],
+        
+        ref: String = "",
+        name: String = "",
+        contact: String = "",
+        baseUrl: String = "",
+        endpoint: String = "",
+        bearerToken: String = "",
+        typeEndPoints: TypeEndPoints = .MegamilChat
     ) {
         self.backgroundColor = backgroundColor
         self.canDragging = canDragging
@@ -43,6 +52,9 @@ public struct MegamilChatView: View {
         self.presentationStyle = presentationStyle
         self.onClose = onClose
         _messages = State(initialValue: messages)
+        
+        viewModel = ChatViewModel(baseUrl: baseUrl, endpoint: endpoint, ref: ref, name: name, contact: contact, bearerToken: bearerToken, typeEndPoints: typeEndPoints)
+        
     }
     
     public var body: some View {
@@ -178,7 +190,14 @@ public struct MegamilChatView: View {
             onSend: {
                 if !messageText.isEmpty && messageText != "" {
                     messages.append(ChatMessage(text: messageText, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))
+                    viewModel.sendMessage(message: messageText) { success, response in
+                        if(success ?? false) {
+                            messages.append(response!)
+                        }
+                    }
+                    
                     messageText = ""
+                    
                 }
             },
             onRecord: {

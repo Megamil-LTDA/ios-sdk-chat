@@ -18,60 +18,54 @@ struct HomeView: View {
                 .ignoresSafeArea()
             
             VStack {
-                NavigationStack {
-                    VStack {
-                        Button("Abrir chat tela cheia") {
-                            presentationStyle = .fullscreen
-                            isChatViewActive = true
-                        }
-                        .padding()
-                        
-                        Button("Abrir chat - Bottom Sheet Grande") {
-                            presentationStyle = .largeBottomSheet
-                            isChatViewActive = true
-                        }
-                        .padding()
-                        
-                        Button("Abrir chat - Bottom Sheet Médio") {
-                            presentationStyle = .mediumBottomSheet
-                            isChatViewActive = true
-                        }
-                        .padding()
-                        
-                        Button("Abrir chat - Bottom Sheet Pequeno") {
-                            presentationStyle = .smallBottomSheet
-                            isChatViewActive = true
-                        }
-                        .padding()
-                        
-                        Button("Abrir chat - Flutuante") {
-                            presentationStyle = .floating
-                            isChatViewActive = true
-                        }
-                        .padding()
+                VStack {
+                    Button("Abrir chat tela cheia") {
+                        presentationStyle = .fullscreen
+                        isChatViewActive = true
                     }
                     .padding()
-                    .fullScreenModal(isPresented: $isChatViewActive) {
-                        MegamilChatView(
-                            backgroundColor: .white,
-                            canDragging: true,
-                            showBorder: true,
-                            themName: "[Megamil AI]",
-                            presentationStyle: presentationStyle,
-                            onClose: {
-                                isChatViewActive = false
-                            },
-                            messages: [
-//                                ChatMessage(text: "Ping 1", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
-//                                ChatMessage(text: "Pong 1", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
-//                                ChatMessage(text: "Ping 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
-//                                ChatMessage(text: "Pong 2", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
-//                                ChatMessage(text: "Ping 3", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
-//                                ChatMessage(text: "Pong 3", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
-//                                ChatMessage(text: "Ping 4", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
-                            ]
-                        )
+                    
+                    Button("Abrir chat - Bottom Sheet Grande") {
+                        presentationStyle = .largeBottomSheet
+                        isChatViewActive = true
                     }
+                    .padding()
+                    
+                    Button("Abrir chat - Bottom Sheet Médio") {
+                        presentationStyle = .mediumBottomSheet
+                        isChatViewActive = true
+                    }
+                    .padding()
+                    
+                    Button("Abrir chat - Bottom Sheet Pequeno") {
+                        presentationStyle = .smallBottomSheet
+                        isChatViewActive = true
+                    }
+                    .padding()
+                    
+                    Button("Abrir chat - Flutuante") {
+                        presentationStyle = .floating
+                        isChatViewActive = true
+                    }
+                    .padding()
+                }
+                .padding()
+//                    .fullScreenCover(isPresented: $isChatViewActive) {
+                .fullScreenModal(isPresented: $isChatViewActive) {
+                    MegamilChatView(
+                        backgroundColor: .white,
+                        canDragging: true,
+                        showBorder: true,
+                        themName: "[Megamil AI]",
+                        presentationStyle: presentationStyle,
+                        onClose: {
+                            isChatViewActive = false
+                        },
+                        messages: [
+                                ChatMessage(text: "Pergunta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+                                ChatMessage(text: "Resposta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
+                        ]
+                    )
                 }
             }
         }

@@ -18,7 +18,7 @@ struct ChatInput: View {
     var onRecord: () -> Void
     var onKeyboardOpen: (Bool) -> Void
     var allowAudioRecording: Bool = true
-    
+    @State private var submitLabel: SubmitLabel = .send
     @State private var keyboardIsVisible = false
     
     var body: some View {
@@ -43,9 +43,8 @@ struct ChatInput: View {
                     ) : nil
                 )
                 .padding(.trailing, 8)
-                .submitLabel(.send) 
+                .submitLabel(submitLabel)
                 .onAppear {
-                        // Observa eventos de teclado
                     NotificationCenter.default.addObserver(
                         forName: UIResponder.keyboardWillShowNotification,
                         object: nil,
@@ -66,6 +65,10 @@ struct ChatInput: View {
                 }
                 .onDisappear {
                     NotificationCenter.default.removeObserver(self)
+                }
+                .onChange(of: messageText) { newValue in
+                    SafePrint("newValue: \(newValue)")
+                    submitLabel = newValue.isEmpty ? .return : .send
                 }
             
             if allowAudioRecording {
@@ -126,6 +129,6 @@ struct ChatInput: View {
     private func sendMessage() {
         onSend()
         messageText = ""
+        UIApplication.shared.sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
     }
-    
 }
