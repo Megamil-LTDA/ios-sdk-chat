@@ -62,8 +62,8 @@ struct HomeView: View {
                             isChatViewActive = false
                         },
                         messages: [
-                                ChatMessage(text: "Pergunta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
-                                ChatMessage(text: "Resposta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
+//                                ChatMessage(text: "Pergunta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
+//                                ChatMessage(text: "Resposta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
                         ],
                         suggestions: [
                             "🕢 Qual horário de funcionamento?",

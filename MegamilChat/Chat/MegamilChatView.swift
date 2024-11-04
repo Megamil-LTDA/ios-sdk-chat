@@ -181,40 +181,76 @@ public struct MegamilChatView: View {
     private func messageScrollView() -> some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                LazyVStack(alignment: .leading) {
-                    ForEach(messages.indices.reversed(), id: \.self) { index in
-                        HStack {
-                            let message = messages[index]
-                            if(message.isFromMe) {
-                                MessageBubble(message: message, backgroundColor: meBubbleColor, textColor: meBubbleTextColor)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .scaleEffect(y: -1)
-                            } else {
-                                MessageBubble(message: message, backgroundColor: themBubbleColor, textColor: themBubbleTextColor)
-                                    .frame(maxWidth: .infinity, alignment: .leading)
-                                    .scaleEffect(y: -1)
-                            }
+                LazyVStack(alignment: .center) {
+                    if messages.isEmpty && !suggestions.isEmpty {
+                        VStack(spacing: 10) {
+                            Text("Sugestões")
+                                .font(.headline)
+                                .foregroundColor(.gray)
+                                .padding(.bottom, 5)
                             
-                            Spacer()
+                            ForEach(suggestions, id: \.self) { suggestion in
+                                Text(suggestion)
+                                    .padding(.horizontal, 16)
+                                    .padding(.vertical, 10)
+                                    .background(Color.gray.opacity(0.5))
+                                    .cornerRadius(10)
+                                    .onTapGesture {
+                                        addSuggestionToMessages(suggestion)
+                                    }
+                                    .blur(radius: 0.5)
+                            }
                         }
-                        .padding(.horizontal, 16)
-                        .padding(.bottom, 4)
+                        .frame(maxWidth: .infinity)
+                        .padding(.bottom, 10)
                     }
-                }
-                .scaleEffect(y: -1)
-                .padding(.top, 10)
-                .onChange(of: messages) { newMessages in
-                    if let lastMessageIndex = newMessages.indices.last {
-                        withAnimation {
-                            scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)
+                    
+                    LazyVStack(alignment: .leading) {
+                        ForEach(messages.indices.reversed(), id: \.self) { index in
+                            HStack {
+                                let message = messages[index]
+                                if(message.isFromMe) {
+                                    MessageBubble(message: message, backgroundColor: meBubbleColor, textColor: meBubbleTextColor)
+                                        .frame(maxWidth: .infinity, alignment: .trailing)
+                                        .scaleEffect(y: -1)
+                                } else {
+                                    MessageBubble(message: message, backgroundColor: themBubbleColor, textColor: themBubbleTextColor)
+                                        .frame(maxWidth: .infinity, alignment: .leading)
+                                        .scaleEffect(y: -1)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(.horizontal, 16)
+                            .padding(.bottom, 4)
                         }
                     }
+                    .scaleEffect(y: -1)
+                    .padding(.top, 10)
+                    .onChange(of: messages) { newMessages in
+                        if let lastMessageIndex = newMessages.indices.last {
+                            withAnimation {
+                                scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)
+                            }
+                        }
+                    }
+                    .padding(.bottom, 80)
                 }
-                .padding(.bottom, 80)
+                .frame(maxWidth: .infinity)
             }
-            .frame(maxWidth: .infinity)
         }
     }
+
+    
+    private func addSuggestionToMessages(_ suggestion: String) {
+        messages.append(ChatMessage(text: suggestion, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))
+        viewModel.sendMessage(message: suggestion) { success, response in
+            if success ?? false, let responseMessage = response {
+                messages.append(responseMessage)
+            }
+        }
+    }
+
     
     private func chatInput() -> some View {
         ChatInput(

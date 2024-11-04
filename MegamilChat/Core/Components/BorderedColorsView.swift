@@ -38,7 +38,7 @@ struct BorderedColorsView: View {
             .onAppear {
                 withAnimation(Animation.linear(duration: 8)
                     .repeatForever(autoreverses: false)) {
-                        startAnimation = true
+//                        startAnimation = true
                     }
             }
     }
