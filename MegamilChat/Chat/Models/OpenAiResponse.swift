@@ -24,7 +24,7 @@ public struct OpenAIResponse: Codable {
             let date = Date(timeIntervalSince1970: TimeInterval(created))
             let dateFormatter = DateFormatter()
             dateFormatter.locale = Locale(identifier: "pt_BR")
-            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm:ss"
+            dateFormatter.dateFormat = "dd/MM/yyyy HH:mm"
             
             timestamp = dateFormatter.string(from: date)
         } else {

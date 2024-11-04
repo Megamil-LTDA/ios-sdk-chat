@@ -21,6 +21,7 @@ public struct MegamilChatView: View {
     var backgroundColor: Color
     var canDragging: Bool
     var showBorder: Bool
+    var showInputBorder: Bool
     var showReturnButton: Bool
     var themName: String
     var presentationStyle: PresentationStyle
@@ -32,6 +33,7 @@ public struct MegamilChatView: View {
     var recordButtonIcon: String
     var buttonColor: Color
     var borderColor: [Color]
+    var borderInputColor: [Color]
     
     var allowAudioRecording: Bool
     var meBubbleColor: Color
@@ -44,6 +46,7 @@ public struct MegamilChatView: View {
         backgroundColor: Color = .white,
         canDragging: Bool = true,
         showBorder: Bool = true,
+        showInputBorder: Bool = true,
         showReturnButton: Bool = true,
         themName: String = "",
         presentationStyle: PresentationStyle = .fullscreen,
@@ -56,13 +59,14 @@ public struct MegamilChatView: View {
         recordButtonIcon: String = "mic.fill",
         buttonColor: Color = Color.blue,
         borderColor: [Color] = [Color.green, Color.blue, Color.red],
+        borderInputColor: [Color] = [Color.orange, Color.pink, Color.gray],
         
         ref: String = "",
         name: String = "",
         contact: String = "",
         baseUrl: String = "",
         endpoint: String = "",
-        bearerToken: String = "",
+        bearerToken: String,
         allowAudioRecording: Bool = false,
         typeEndPoints: TypeEndPoints = .MegamilChat,
         meBubbleColor: Color = .blue,
@@ -73,6 +77,7 @@ public struct MegamilChatView: View {
         self.backgroundColor = backgroundColor
         self.canDragging = canDragging
         self.showBorder = showBorder
+        self.showInputBorder = showInputBorder
         self.showReturnButton = showReturnButton
         self.themName = themName
         self.presentationStyle = presentationStyle
@@ -87,6 +92,7 @@ public struct MegamilChatView: View {
         self.recordButtonIcon = recordButtonIcon
         self.buttonColor = buttonColor
         self.borderColor = borderColor
+        self.borderInputColor = borderInputColor
         
         _suggestions = State(initialValue: suggestions)
         _messages = State(initialValue: messages)
@@ -153,6 +159,8 @@ public struct MegamilChatView: View {
             
             if showReturnButton {
                 returnButton()
+            } else {
+                emptyView()
             }
             
             messageScrollView()
@@ -177,6 +185,13 @@ public struct MegamilChatView: View {
         .padding(.top, presentationStyle.isBottomSheet && canDragging ? -8 : presentationStyle.isFullScreen ? 42 : 16)
         .padding(.leading, 12)
     }
+    
+    private func emptyView(height: CGFloat = 100) -> some View {
+        Rectangle()
+            .fill(Color.clear)
+            .frame(height: height)
+    }
+    
     
     private func messageScrollView() -> some View {
         ScrollViewReader { scrollProxy in
@@ -259,8 +274,8 @@ public struct MegamilChatView: View {
             sendButtonIcon: sendButtonIcon,
             recordButtonIcon: recordButtonIcon,
             buttonColor: buttonColor,
-            borderColor: borderColor,
-            showBorder: showBorder,
+            borderInputColor: borderInputColor,
+            showInputBorder: showInputBorder,
             borderWidth: 1,
             onSend: {
                 if !messageText.isEmpty && messageText != "" {
@@ -289,7 +304,8 @@ public struct MegamilChatView: View {
     private func borderView() -> some View {
         BorderedColorsView(
             cornerRadius: cornerRadius,
-            borderWidth: 6
+            borderWidth: 6,
+            colors: borderColor
         )
         .frame(width: presentationStyle == .floating ? UIScreen.main.bounds.width * 0.9 : UIScreen.main.bounds.width, height: presentationStyle.sheetHeight())
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))

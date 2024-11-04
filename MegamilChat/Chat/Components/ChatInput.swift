@@ -11,8 +11,8 @@ struct ChatInput: View {
     var sendButtonIcon: String = "paperplane.fill"
     var recordButtonIcon: String = "mic.fill"
     var buttonColor: Color = Color.blue
-    var borderColor: [Color] = []
-    var showBorder: Bool = true
+    var borderInputColor: [Color] = []
+    var showInputBorder: Bool = true
     var borderWidth: CGFloat = 8.0
     var onSend: () -> Void
     var onRecord: () -> Void
@@ -36,10 +36,10 @@ struct ChatInput: View {
                 }
                 .cornerRadius(8)
                 .overlay(
-                    showBorder ? BorderedColorsView(
+                    showInputBorder ? BorderedColorsView(
                         cornerRadius: 8,
                         borderWidth: borderWidth,
-                        colors: borderColor
+                        colors: borderInputColor
                     ) : nil
                 )
                 .padding(.trailing, 8)
