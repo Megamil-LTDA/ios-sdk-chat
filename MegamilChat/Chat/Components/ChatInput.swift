@@ -72,57 +72,35 @@ struct ChatInput: View {
             
             if allowAudioRecording {
                 if messageText.isEmpty {
-                    Button(action: {
-                        onRecord()
-                    }) {
-                        Image(systemName: recordButtonIcon)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                            .background(buttonColor)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 3)
-                    }
+                    setSendButton()
                 } else {
-                    Button(action: {
-                        if !messageText.isEmpty {
-                            sendMessage()
-                        }
-                    }) {
-                        Image(systemName: sendButtonIcon)
-                            .resizable()
-                            .scaledToFit()
-                            .frame(width: 24, height: 24)
-                            .padding(8)
-                            .background(messageText.isEmpty ? .gray : buttonColor)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 3)
-                    }
+                    
                 }
             } else {
-                Button(action: {
-                    if !messageText.isEmpty {
-                        sendMessage()
-                    }
-                }) {
-                    Image(systemName: sendButtonIcon)
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 24, height: 24)
-                        .padding(8)
-                        .background(messageText.isEmpty ? .gray : buttonColor)
-                        .foregroundColor(.white)
-                        .clipShape(Circle())
-                        .shadow(radius: 3)
-                }
-                .disabled(messageText.isEmpty)
+                setSendButton()
             }
         }
         .padding(.horizontal, 32)
         .padding(.bottom, 22)
+    }
+    
+    private func setSendButton() -> some View {
+        return
+            Button(action: {
+                if !messageText.isEmpty {
+                    sendMessage()
+                }
+            }) {
+                Image(systemName: sendButtonIcon)
+                    .resizable()
+                    .scaledToFit()
+                    .frame(width: 24, height: 24)
+                    .padding(8)
+                    .background(messageText.isEmpty ? .gray : buttonColor)
+                    .foregroundColor(.white)
+                    .clipShape(Circle())
+                    .shadow(radius: 3)
+            }.disabled(messageText.isEmpty)
     }
     
     private func sendMessage() {

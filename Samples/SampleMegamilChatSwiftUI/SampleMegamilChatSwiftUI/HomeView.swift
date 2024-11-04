@@ -1,10 +1,10 @@
-    //
-    //  HomeView.swift
-    //  Megamil
-    //
-    //  Created by Eduardo dos Santos on 30/10/24.
-    //  Copyright © 2024 Megamil. All rights reserved.
-    //
+//
+//  HomeView.swift
+//  Megamil
+//
+//  Created by Eduardo dos Santos on 30/10/24.
+//  Copyright © 2024 Megamil. All rights reserved.
+//
 import SwiftUI
 import MegamilChat
 
@@ -13,7 +13,7 @@ struct HomeView: View {
     @State private var isChatViewActive = false
     
     var body: some View {
-        NavigationView { // Adicionando NavigationView aqui
+        NavigationView {
             ZStack {
                 Color.white
                     .ignoresSafeArea()
@@ -52,7 +52,7 @@ struct HomeView: View {
                         
                         NavigationLink(destination: createChatView(presentationStyle: .fullscreen, showReturnButton: false)
                             .navigationBarBackButtonHidden(false)) {
-                                Text("Abrir chat tela cheia via push")
+                                Text("Abrir chat tela cheia - via push")
                                     .foregroundColor(.blue)
                             }
                             .padding()
@@ -64,9 +64,10 @@ struct HomeView: View {
                 }
             }
         }
-//        .fullScreenCover(isPresented: $isChatViewActive) {
-            //                    createChatView(presentationStyle: presentationStyle)
-            //                }
+//      Modo alternativo
+//      .fullScreenCover(isPresented: $isChatViewActive) {
+//          createChatView(presentationStyle: presentationStyle)
+//      }
         .fullScreenModal(isPresented: $isChatViewActive) {
             createChatView(presentationStyle: presentationStyle)
         }

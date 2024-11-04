@@ -40,7 +40,7 @@ public extension UIDevice {
         //        }
         
         static func isVpnActive(url: String, completion: @escaping (Bool) -> Void) {
-            guard let url = URL(string: url) else { //@todo
+            guard let url = URL(string: url) else {
                 completion(false)
                 return
             }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Vq7-kG-xt3">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="23506"/>
@@ -8,6 +8,22 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
+        <!--Navigation Controller-->
+        <scene sceneID="KC6-KH-drd">
+            <objects>
+                <navigationController id="Vq7-kG-xt3" sceneMemberID="viewController">
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="O5G-qz-YK0">
+                        <rect key="frame" x="0.0" y="59" width="393" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Ahv-b7-sJX"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Hg-C8-Dmk" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-902" y="-27"/>
+        </scene>
         <!--Home View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
@@ -20,7 +36,7 @@
                                 <rect key="frame" x="32" y="226" width="329" height="400"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7mp-D2-KW6">
-                                        <rect key="frame" x="0.0" y="0.0" width="329" height="80"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="329" height="66.666666666666671"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Abrir chat tela cheia"/>
                                         <connections>
@@ -28,7 +44,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ba6-Yl-4ge">
-                                        <rect key="frame" x="0.0" y="80" width="329" height="80"/>
+                                        <rect key="frame" x="0.0" y="66.666666666666686" width="329" height="66.666666666666686"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Abrir chat - Bottom Sheet Grande"/>
                                         <connections>
@@ -36,7 +52,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X9D-eX-Qe0">
-                                        <rect key="frame" x="0.0" y="160" width="329" height="80"/>
+                                        <rect key="frame" x="0.0" y="133.33333333333331" width="329" height="66.666666666666686"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Abrir chat - Bottom Sheet Médio"/>
                                         <connections>
@@ -44,7 +60,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Kvd-fA-nHd">
-                                        <rect key="frame" x="0.0" y="240" width="329" height="80"/>
+                                        <rect key="frame" x="0.0" y="200" width="329" height="66.666666666666686"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Abrir chat - Bottom Sheet Pequeno"/>
                                         <connections>
@@ -52,11 +68,19 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Zjj-3L-xDM">
-                                        <rect key="frame" x="0.0" y="320" width="329" height="80"/>
+                                        <rect key="frame" x="0.0" y="266.66666666666669" width="329" height="66.666666666666686"/>
                                         <state key="normal" title="Button"/>
                                         <buttonConfiguration key="configuration" style="plain" title="Abrir chat - Flutuante"/>
                                         <connections>
                                             <action selector="openFloatingChat:" destination="BYZ-38-t0r" eventType="touchUpInside" id="88P-ZF-O4b"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ocJ-3N-phm">
+                                        <rect key="frame" x="0.0" y="333.33333333333337" width="329" height="66.666666666666686"/>
+                                        <state key="normal" title="Button"/>
+                                        <buttonConfiguration key="configuration" style="plain" title="Abrir chat tela cheia - via push"/>
+                                        <connections>
+                                            <action selector="pushToChatView:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KrC-MF-Wvg"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -74,6 +98,7 @@
                             <constraint firstItem="Ln6-zK-Vkf" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="zLH-vX-sZK"/>
                         </constraints>
                     </view>
+                    <navigationItem key="navigationItem" id="020-EV-vTv"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
