@@ -18,10 +18,10 @@ struct ChatInput: View {
     var onRecord: () -> Void
     var onKeyboardOpen: (Bool) -> Void
     var allowAudioRecording: Bool = true
-    @State private var submitLabel: SubmitLabel = .send
     @State private var keyboardIsVisible = false
     
     var body: some View {
+
         HStack {
             TextField(placeholder, text: $messageText)
                 .padding(12)
@@ -43,7 +43,7 @@ struct ChatInput: View {
                     ) : nil
                 )
                 .padding(.trailing, 8)
-                .submitLabel(submitLabel)
+                .submitLabel(messageText == "" ? .send : .return) //@todo não funciona
                 .onAppear {
                     NotificationCenter.default.addObserver(
                         forName: UIResponder.keyboardWillShowNotification,
@@ -68,7 +68,6 @@ struct ChatInput: View {
                 }
                 .onChange(of: messageText) { newValue in
                     SafePrint("newValue: \(newValue)")
-                    submitLabel = newValue.isEmpty ? .return : .send
                 }
             
             if allowAudioRecording {
@@ -97,7 +96,7 @@ struct ChatInput: View {
                             .scaledToFit()
                             .frame(width: 24, height: 24)
                             .padding(8)
-                            .background(buttonColor)
+                            .background(messageText.isEmpty ? .gray : buttonColor)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                             .shadow(radius: 3)
@@ -114,8 +113,8 @@ struct ChatInput: View {
                         .scaledToFit()
                         .frame(width: 24, height: 24)
                         .padding(8)
-                        .background(buttonColor)
-                        .foregroundColor(messageText.isEmpty ? .gray : .white)
+                        .background(messageText.isEmpty ? .gray : buttonColor)
+                        .foregroundColor(.white)
                         .clipShape(Circle())
                         .shadow(radius: 3)
                 }

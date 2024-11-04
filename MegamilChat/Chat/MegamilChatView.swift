@@ -12,19 +12,33 @@ public struct MegamilChatView: View {
     @GestureState private var isDragging = false
     @State private var messageText: String = ""
     @State private var messages: [ChatMessage] = []
+    @State private var suggestions: [String] = []
     @State private var keyboardHeight: CGFloat = 0
     
     private var safeAreaHeight: CGFloat { (hasNotch() && !presentationStyle.isFullScreen) ? 34.0 : 0 }
     private var cornerRadius: CGFloat { hasNotch() ? (presentationStyle == .floating ? 32 : 60) : 0 }
     
-    var backgroundColor: Color = .white
-    var canDragging: Bool = true
-    var showBorder: Bool = true
-    var showReturnButton: Bool = true
-    var themName: String = ""
-    var presentationStyle: PresentationStyle = .fullscreen
+    var backgroundColor: Color
+    var canDragging: Bool
+    var showBorder: Bool
+    var showReturnButton: Bool
+    var themName: String
+    var presentationStyle: PresentationStyle
     var onClose: (() -> Void)?
     var viewModel: ChatViewModel
+    
+    var placeholder: String
+    var sendButtonIcon: String
+    var recordButtonIcon: String
+    var buttonColor: Color
+    var borderColor: [Color]
+    
+    var allowAudioRecording: Bool
+    var meBubbleColor: Color
+    var meBubbleTextColor: Color
+    var themBubbleColor: Color
+    var themBubbleTextColor: Color
+    
     
     public init(
         backgroundColor: Color = .white,
@@ -35,6 +49,13 @@ public struct MegamilChatView: View {
         presentationStyle: PresentationStyle = .fullscreen,
         onClose: (() -> Void)? = nil,
         messages: [ChatMessage] = [],
+        suggestions: [String] = [],
+        
+        placeholder: String = "Digite uma mensagem...",
+        sendButtonIcon: String = "paperplane.fill",
+        recordButtonIcon: String = "mic.fill",
+        buttonColor: Color = Color.blue,
+        borderColor: [Color] = [Color.green, Color.blue, Color.red],
         
         ref: String = "",
         name: String = "",
@@ -42,7 +63,12 @@ public struct MegamilChatView: View {
         baseUrl: String = "",
         endpoint: String = "",
         bearerToken: String = "",
-        typeEndPoints: TypeEndPoints = .MegamilChat
+        allowAudioRecording: Bool = false,
+        typeEndPoints: TypeEndPoints = .MegamilChat,
+        meBubbleColor: Color = .blue,
+        meBubbleTextColor: Color = .white,
+        themBubbleColor: Color = .green,
+        themBubbleTextColor: Color = .white
     ) {
         self.backgroundColor = backgroundColor
         self.canDragging = canDragging
@@ -51,8 +77,19 @@ public struct MegamilChatView: View {
         self.themName = themName
         self.presentationStyle = presentationStyle
         self.onClose = onClose
-        _messages = State(initialValue: messages)
+        self.allowAudioRecording = allowAudioRecording
+        self.meBubbleColor = meBubbleColor
+        self.meBubbleTextColor = meBubbleTextColor
+        self.themBubbleColor = themBubbleColor
+        self.themBubbleTextColor = themBubbleTextColor
+        self.placeholder = placeholder
+        self.sendButtonIcon = sendButtonIcon
+        self.recordButtonIcon = recordButtonIcon
+        self.buttonColor = buttonColor
+        self.borderColor = borderColor
         
+        _suggestions = State(initialValue: suggestions)
+        _messages = State(initialValue: messages)
         viewModel = ChatViewModel(baseUrl: baseUrl, endpoint: endpoint, ref: ref, name: name, contact: contact, bearerToken: bearerToken, typeEndPoints: typeEndPoints)
         
     }
@@ -149,11 +186,11 @@ public struct MegamilChatView: View {
                         HStack {
                             let message = messages[index]
                             if(message.isFromMe) {
-                                MessageBubble(message: message, backgroundColor: .blue, textColor: .white)
+                                MessageBubble(message: message, backgroundColor: meBubbleColor, textColor: meBubbleTextColor)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
                                     .scaleEffect(y: -1)
                             } else {
-                                MessageBubble(message: message, backgroundColor: .green, textColor: .white)
+                                MessageBubble(message: message, backgroundColor: themBubbleColor, textColor: themBubbleTextColor)
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .scaleEffect(y: -1)
                             }
@@ -182,10 +219,12 @@ public struct MegamilChatView: View {
     private func chatInput() -> some View {
         ChatInput(
             messageText: $messageText,
-            placeholder: "Digite uma mensagem...",
-            buttonColor: Color.blue,
-            borderColor: [Color.red, Color.blue, Color.green],
-            showBorder: true,
+            placeholder: placeholder,
+            sendButtonIcon: sendButtonIcon,
+            recordButtonIcon: recordButtonIcon,
+            buttonColor: buttonColor,
+            borderColor: borderColor,
+            showBorder: showBorder,
             borderWidth: 1,
             onSend: {
                 if !messageText.isEmpty && messageText != "" {
@@ -206,7 +245,7 @@ public struct MegamilChatView: View {
             onKeyboardOpen: { isOpen in
                 SafePrint("Teclado aberto")
             },
-            allowAudioRecording: true
+            allowAudioRecording: allowAudioRecording
         )
         .padding(.bottom, 22)
     }

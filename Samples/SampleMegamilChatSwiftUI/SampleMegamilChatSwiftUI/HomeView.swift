@@ -64,7 +64,14 @@ struct HomeView: View {
                         messages: [
                                 ChatMessage(text: "Pergunta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true),
                                 ChatMessage(text: "Resposta no histórico interno", timestamp: DateHelper.formatCurrentDateTime(), isFromMe: false),
-                        ]
+                        ],
+                        suggestions: [
+                            "🕢 Qual horário de funcionamento?",
+                            "💲 Qual o valor da mensalidade?",
+                            "🗺️ Qual o endereço da loja?",
+                            "📆 Qual o prazo de orçamento?"
+                        ],
+                        typeEndPoints: .OpenAI
                     )
                 }
             }
