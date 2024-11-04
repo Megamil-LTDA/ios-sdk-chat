@@ -16,8 +16,9 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MegamilChat"
-  spec.version      = "0.0.1"
+  spec.version      = "0.0.2"
   spec.summary      = "Connect LLMChat on your app"
+  spec.swift_versions = ['5.0']
 
   # This description is used to generate tags and improve search results.
   #   * Think: What does it do? Why did you write it? What is the focus?
@@ -39,8 +40,8 @@ Pod::Spec.new do |spec|
   #  Popular ones are 'MIT', 'BSD' and 'Apache License, Version 2.0'.
   #
 
-  spec.license      = "MIT"
-  # spec.license      = { :type => "MIT", :file => "FILE_LICENSE" }
+  spec.preserve_paths = "LICENSE"
+  spec.license      = { :type => "MIT", :file => "LICENSE" }
 
 
   # ――― Author Metadata  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
@@ -64,7 +65,6 @@ Pod::Spec.new do |spec|
   #  the deployment target. You can optionally include the target after the platform.
   #
 
-  spec.platform     = :ios
   spec.platform     = :ios, "15.0"
 
   #  When using multiple platforms
@@ -135,5 +135,8 @@ Pod::Spec.new do |spec|
 
   # spec.xcconfig = { "HEADER_SEARCH_PATHS" => "$(SDKROOT)/usr/include/libxml2" }
   # spec.dependency "JSONKit", "~> 1.4"
+
+  # pod trunk register eduardo@megamil.com.br 'Eduardo dos Santos' --description='Máquina de desenvolvimento'
+  # pod trunk push MegamilChat.podspec
 
 end
