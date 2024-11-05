@@ -12,12 +12,12 @@ extension MegamilChatView {
     internal func chatInput() -> some View {
         ChatInput(
             messageText: $messageText,
-            placeholder: placeholder,
-            sendButtonIcon: sendButtonIcon,
-            recordButtonIcon: recordButtonIcon,
-            buttonColor: buttonColor,
-            borderInputColor: borderInputColor,
-            showInputBorder: showInputBorder,
+            placeholder: config.placeholder,
+            sendButtonIcon: config.sendButtonIcon,
+            recordButtonIcon: config.recordButtonIcon,
+            buttonColor: config.buttonColor,
+            borderInputColor: config.borderInputColor,
+            showInputBorder: config.showInputBorder,
             borderWidth: 1,
             onSend: {
                 if !messageText.isEmpty && messageText != "" {
@@ -38,7 +38,7 @@ extension MegamilChatView {
             onKeyboardOpen: { isOpen in
                 SafePrint("Teclado aberto")
             },
-            allowAudioRecording: allowAudioRecording
+            allowAudioRecording: config.allowAudioRecording
         )
         .padding(.bottom, 22)
     }

@@ -8,12 +8,6 @@
 import SwiftUI
 import Combine
 
-public enum TypeEndPoints: String {
-    case OpenAI
-    case MegamilChat
-    case CustomURL
-}
-
 class ChatViewModel: ObservableObject {
     
     var ref: String = ""

@@ -39,11 +39,11 @@ extension MegamilChatView {
                             HStack {
                                 let message = messages[index]
                                 if(message.isFromMe) {
-                                    MessageBubble(message: message, backgroundColor: meBubbleColor, textColor: meBubbleTextColor)
+                                    MessageBubble(message: message, backgroundColor: config.meBubbleColor, textColor: config.meBubbleTextColor)
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                         .scaleEffect(y: -1)
                                 } else {
-                                    MessageBubble(message: message, backgroundColor: themBubbleColor, textColor: themBubbleTextColor)
+                                    MessageBubble(message: message, backgroundColor: config.themBubbleColor, textColor: config.themBubbleTextColor)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .scaleEffect(y: -1)
                                 }
@@ -56,7 +56,7 @@ extension MegamilChatView {
                     }
                     .scaleEffect(y: -1)
                     .padding(.top, 10)
-                    .onChange(of: messages) { newMessages in
+                    .onChangeCompat(of: config.messages) { newMessages in
                         if let lastMessageIndex = newMessages.indices.last {
                             withAnimation {
                                 scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)

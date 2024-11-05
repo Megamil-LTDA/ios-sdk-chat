@@ -15,7 +15,28 @@ struct RoundedCorner: Shape {
     }
 }
 
+struct OnChangeCompatModifier<T: Equatable>: ViewModifier {
+    let value: T
+    let action: (T) -> Void
+    
+    @ViewBuilder
+    func body(content: Content) -> some View {
+        if #available(iOS 17.0, *) {
+            content.onChange(of: value) { _, newValue in
+                action(newValue)
+            }
+        } else {
+            content.onChange(of: value) { newValue in
+                action(newValue)
+            }
+        }
+    }
+}
+
 extension View {
+    func onChangeCompat<T: Equatable>(of value: T, perform action: @escaping (T) -> Void) -> some View {
+        self.modifier(OnChangeCompatModifier(value: value, action: action))
+    }
     
     func cornerRadius(_ radius: CGFloat, corners: UIRectCorner) -> some View {
         clipShape(RoundedCorner(radius: radius, corners: corners))

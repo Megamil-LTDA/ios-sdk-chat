@@ -12,7 +12,7 @@ extension MegamilChatView {
         NotificationCenter.default.addObserver(forName: UIResponder.keyboardWillShowNotification, object: nil, queue: .main) { notification in
             if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
                 var fixHeight = 0.0
-                switch presentationStyle {
+                switch config.presentationStyle {
                     case .fullscreen:
                         fixHeight = 0.0
                         SafePrint("fullscreen")

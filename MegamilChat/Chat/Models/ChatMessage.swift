@@ -5,7 +5,7 @@
 //  Created by Eduardo dos santos on 03/11/24.
 //
 
-public struct ChatMessage: Equatable {
+public struct ChatMessage: Codable, Equatable {
     var text: String
     var timestamp: String
     var isFromMe: Bool

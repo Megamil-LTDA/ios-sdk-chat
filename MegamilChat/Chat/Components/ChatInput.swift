@@ -66,7 +66,7 @@ struct ChatInput: View {
                 .onDisappear {
                     NotificationCenter.default.removeObserver(self)
                 }
-                .onChange(of: messageText) { newValue in
+                .onChangeCompat(of: messageText) { newValue in
                     SafePrint("newValue: \(newValue)")
                 }
             

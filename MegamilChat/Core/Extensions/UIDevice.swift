@@ -175,7 +175,7 @@ public extension UIDevice {
      Validate if there is an internet connection
      ------------------------------------
      */
-    static let isConnected: Bool? = {
+    static let isConnected: Bool = {
         var zeroAddress = sockaddr_in()
         zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
         zeroAddress.sin_family = sa_family_t(AF_INET)

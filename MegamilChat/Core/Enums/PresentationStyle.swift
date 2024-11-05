@@ -5,12 +5,12 @@
 //
 import SwiftUI
 
-public enum PresentationStyle {
-    case fullscreen
-    case largeBottomSheet
-    case mediumBottomSheet
-    case smallBottomSheet
-    case floating
+public enum PresentationStyle: String, Codable {
+    case fullscreen = "fullscreen"
+    case largeBottomSheet = "largebottomsheet"
+    case mediumBottomSheet = "mediumbottomsheet"
+    case smallBottomSheet = "smallbottomsheet"
+    case floating = "floating"
     
     func sheetHeight() -> CGFloat {
         switch self {
@@ -27,7 +27,6 @@ public enum PresentationStyle {
         }
     }
     
-    
     var isBottomSheet: Bool {
         self != .floating && self != .fullscreen
     }
@@ -40,4 +39,20 @@ public enum PresentationStyle {
         self == .floating
     }
     
+    static func fromString(_ styleString: String) -> PresentationStyle {
+        switch styleString.lowercased() {
+            case "fullscreen":
+                return .fullscreen
+            case "largebottomsheet":
+                return .largeBottomSheet
+            case "mediumbottomsheet":
+                return .mediumBottomSheet
+            case "smallbottomsheet":
+                return .smallBottomSheet
+            case "floating":
+                return .floating
+            default:
+                return .fullscreen
+        }
+    }
 }
