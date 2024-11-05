@@ -5,11 +5,12 @@
 //
 import SwiftUI
 
-struct BorderedColorsView: View {
-    var cornerRadius: CGFloat
-    var borderWidth: CGFloat
+public struct BorderedColorsView: View {
+    public var cornerRadius: CGFloat
+    public var borderWidth: CGFloat
+    public var usingAnimation: Bool = false
     @State private var startAnimation = false
-    var colors: [Color] = [
+    public var colors: [Color] = [
         Color.red.opacity(0.5),
         Color.orange.opacity(0.5),
         Color.yellow.opacity(0.5),
@@ -20,7 +21,23 @@ struct BorderedColorsView: View {
         Color.red.opacity(0.5)
     ]
     
-    var body: some View {
+    public init(cornerRadius: CGFloat, borderWidth: CGFloat, usingAnimation: Bool = false, colors: [Color] = [
+        Color.red.opacity(0.5),
+        Color.orange.opacity(0.5),
+        Color.yellow.opacity(0.5),
+        Color.green.opacity(0.5),
+        Color.blue.opacity(0.5),
+        Color.purple.opacity(0.5),
+        Color.pink.opacity(0.5),
+        Color.red.opacity(0.5)
+    ]) {
+        self.cornerRadius = cornerRadius
+        self.borderWidth = borderWidth
+        self.usingAnimation = usingAnimation
+        self.colors = colors
+    }
+    
+    public var body: some View {
         RoundedRectangle(cornerRadius: cornerRadius)
             .fill(Color.clear)
             .overlay(
@@ -38,7 +55,9 @@ struct BorderedColorsView: View {
             .onAppear {
                 withAnimation(Animation.linear(duration: 8)
                     .repeatForever(autoreverses: false)) {
-//                        startAnimation = true
+                        if(usingAnimation) {
+                            startAnimation = true
+                        }
                     }
             }
     }

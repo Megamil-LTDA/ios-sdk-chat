@@ -33,7 +33,7 @@ struct OnChangeCompatModifier<T: Equatable>: ViewModifier {
     }
 }
 
-extension View {
+public extension View {
     func onChangeCompat<T: Equatable>(of value: T, perform action: @escaping (T) -> Void) -> some View {
         self.modifier(OnChangeCompatModifier(value: value, action: action))
     }
@@ -52,8 +52,9 @@ extension View {
         return topInset > 20
     }
     
-    public func fullScreenModal<Content: View>(
+    func fullScreenModal<Content: View>(
         isPresented: Binding<Bool>,
+        closeOnTap: Bool = true,
         @ViewBuilder content: @escaping () -> Content
     ) -> some View {
         ZStack {
@@ -64,7 +65,9 @@ extension View {
                     .transition(.opacity.animation(.easeInOut(duration: 0.3)))
                     .zIndex(1)
                     .onTapGesture {
-                        isPresented.wrappedValue = false
+                        if(closeOnTap) {
+                            isPresented.wrappedValue = false
+                        }
                     }
             }
         }

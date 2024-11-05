@@ -6,7 +6,7 @@
 //
 import Foundation
 
-enum PrintType {
+public enum PrintType {
     case error
     case warning
     case info
@@ -22,10 +22,10 @@ enum PrintType {
     }
 }
 
-class SafePrint {
+public class SafePrint {
     
     @discardableResult
-    init(_ items: Any..., separator: String = " ", terminator: String = "\n|Safe Print End|\n===========", prefix: String = "", forceFullPrint: Bool = false, savePrint: Bool = false, showToast: Bool = false, type: PrintType = .default) {
+    public init(_ items: Any..., separator: String = " ", terminator: String = "\n|Safe Print End|\n===========", prefix: String = "", forceFullPrint: Bool = false, savePrint: Bool = false, showToast: Bool = false, type: PrintType = .default) {
         
 #if !PRODUCTION
         var printItem = (items.count > 1 ? items : items.first) ?? "Empty print"
