@@ -14,30 +14,30 @@ import Foundation
 
 // MARK: - MegamilChatConfig
 public struct MegamilChatConfig: Codable {
-    public let backgroundColor: Color
-    public let canDragging, showBorder, showInputBorder, showReturnButton: Bool
-    public let themName: String
-    public let presentationStyle: PresentationStyle
+    public var backgroundColor: Color
+    public var canDragging, showBorder, showInputBorder, showReturnButton: Bool
+    public var themName: String
+    public var presentationStyle: PresentationStyle
     public var typeEndPoints: TypeEndPoints = .MegamilChat
-    public let messages: [ChatMessage]
-    public let suggestions: [String]
-    public let placeholder: String
-    public let sendButtonIcon: String
-    public let recordButtonIcon: String
-    public let buttonColor: Color
-    public let borderColor: [Color]
-    public let borderInputColor: [Color]
-    public let ref: String
-    public let name: String
-    public let contact: String
-    public let baseUrl: String
-    public let endpoint: String
-    public let bearerToken: String
-    public let allowAudioRecording: Bool
-    public let meBubbleColor: Color
-    public let meBubbleTextColor: Color
-    public let themBubbleColor: Color
-    public let themBubbleTextColor: Color
+    public var messages: [ChatMessage]
+    public var suggestions: [String]
+    public var placeholder: String
+    public var sendButtonIcon: String
+    public var recordButtonIcon: String
+    public var buttonColor: Color
+    public var borderColor: [Color]
+    public var borderInputColor: [Color]
+    public var ref: String
+    public var name: String
+    public var contact: String
+    public var baseUrl: String
+    public var endpoint: String
+    public var bearerToken: String
+    public var allowAudioRecording: Bool
+    public var meBubbleColor: Color
+    public var meBubbleTextColor: Color
+    public var themBubbleColor: Color
+    public var themBubbleTextColor: Color
 
    // onClose: (() -> Void)? = nil,
    // typeEndPoints: TypeEndPoints = .MegamilChat,
