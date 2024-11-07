@@ -38,9 +38,6 @@ public struct MegamilChatConfig: Codable {
     public var meBubbleTextColor: Color
     public var themBubbleColor: Color
     public var themBubbleTextColor: Color
-
-   // onClose: (() -> Void)? = nil,
-   // typeEndPoints: TypeEndPoints = .MegamilChat,
     
     public init(
         backgroundColor: String = "#FFFFFF",
@@ -139,71 +136,33 @@ public struct MegamilChatConfig: Codable {
     
     public init(from decoder: Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
-        backgroundColor = Color(hex: try container.decode(String.self, forKey: .backgroundColor))
-        canDragging = try container.decode(Bool.self, forKey: .canDragging)
-        showBorder = try container.decode(Bool.self, forKey: .showBorder)
-        showInputBorder = try container.decode(Bool.self, forKey: .showInputBorder)
-        showReturnButton = try container.decode(Bool.self, forKey: .showReturnButton)
-        themName = try container.decode(String.self, forKey: .themName)
-        presentationStyle = PresentationStyle.fromString(try container.decode(String.self, forKey: .presentationStyle))
-        typeEndPoints = TypeEndPoints.fromString(try container.decode(String.self, forKey: .typeEndPoints))
-        messages = try container.decode([ChatMessage].self, forKey: .messages)
-        suggestions = try container.decode([String].self, forKey: .suggestions)
-        placeholder = try container.decode(String.self, forKey: .placeholder)
-        sendButtonIcon = try container.decode(String.self, forKey: .sendButtonIcon)
-        recordButtonIcon = try container.decode(String.self, forKey: .recordButtonIcon)
-        buttonColor = Color(hex: try container.decode(String.self, forKey: .buttonColor))
-        borderColor = try container.decode([String].self, forKey: .borderColor).map { Color(hex: $0) }
-        borderInputColor = try container.decode([String].self, forKey: .borderInputColor).map { Color(hex: $0) }
-        ref = try container.decode(String.self, forKey: .ref)
-        name = try container.decode(String.self, forKey: .name)
-        contact = try container.decode(String.self, forKey: .contact)
-        baseUrl = try container.decode(String.self, forKey: .baseUrl)
-        endpoint = try container.decode(String.self, forKey: .endpoint)
-        bearerToken = try container.decode(String.self, forKey: .bearerToken)
-        allowAudioRecording = try container.decode(Bool.self, forKey: .allowAudioRecording)
-        meBubbleColor = Color(hex: try container.decode(String.self, forKey: .meBubbleColor))
-        meBubbleTextColor = Color(hex: try container.decode(String.self, forKey: .meBubbleTextColor))
-        themBubbleColor = Color(hex: try container.decode(String.self, forKey: .themBubbleColor))
-        themBubbleTextColor = Color(hex: try container.decode(String.self, forKey: .themBubbleTextColor))
+        backgroundColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? "#FFFFFF")
+        canDragging = try container.decodeIfPresent(Bool.self, forKey: .canDragging) ?? true
+        showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
+        showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
+        showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
+        themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
+        presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
+        typeEndPoints = TypeEndPoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndPoints) ?? "typeEndPoints")
+        messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
+        suggestions = try container.decodeIfPresent([String].self, forKey: .suggestions) ?? []
+        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? "Digite uma mensagem..."
+        sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
+        recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
+        buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
+        borderColor = (try container.decodeIfPresent([String].self, forKey: .borderColor) ?? ["#008000", "#0000FF", "#FF0000"]).map { Color(hex: $0) }
+        borderInputColor = (try container.decodeIfPresent([String].self, forKey: .borderInputColor) ?? ["#FFA500", "#FFC0CB", "#808080"]).map { Color(hex: $0) }
+        ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
+        baseUrl = try container.decodeIfPresent(String.self, forKey: .baseUrl) ?? ""
+        endpoint = try container.decodeIfPresent(String.self, forKey: .endpoint) ?? ""
+        bearerToken = try container.decodeIfPresent(String.self, forKey: .bearerToken) ?? ""
+        allowAudioRecording = try container.decodeIfPresent(Bool.self, forKey: .allowAudioRecording) ?? false
+        meBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleColor) ?? "#0000FF")
+        meBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleTextColor) ?? "#FFFFFF")
+        themBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleColor) ?? "#008000")
+        themBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleTextColor) ?? "#FFFFFF")
     }
-}
 
-/*
- {
- "backgroundColor": "#FFFFFF",
- "canDragging": true,
- "showBorder": true,
- "showInputBorder": true,
- "showReturnButton": true,
- "themName": "Nome do Tema",
- "presentationStyle": "fullscreen",
- "messages": [
- {
- "text": "Olá, como você está?",
- "timestamp": "2024-11-05T10:00:00Z",
- "isFromMe": true
- },
- {
- "text": "Estou bem, obrigado!",
- "timestamp": "2024-11-05T10:00:01Z",
- "isFromMe": false
- }
- ],
- "suggestions": [
- "Como posso ajudar você?",
- "Qual é a sua dúvida?"
- ],
- "placeholder": "Digite uma mensagem...",
- "sendButtonIcon": "paperplane.fill",
- "recordButtonIcon": "mic.fill",
- "buttonColor": "#0000FF",
- "borderColor": ["#008000", "#0000FF", "#FF0000"],
- "borderInputColor": ["#FFA500", "#FFC0CB", "#808080"],
- "allowAudioRecording": false,
- "meBubbleColor": "#0000FF",
- "meBubbleTextColor": "#FFFFFF",
- "themBubbleColor": "#008000",
- "themBubbleTextColor": "#FFFFFF"
- }
-*/
+}
