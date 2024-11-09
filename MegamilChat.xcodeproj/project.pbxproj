@@ -109,11 +109,10 @@
 				};
 			};
 			buildConfigurationList = 593AB3B02CD6C85800EB85F8 /* Build configuration list for PBXProject "MegamilChat" */;
-			developmentRegion = en;
+			developmentRegion = "pt-BR";
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
 				"pt-BR",
 			);
 			mainGroup = 593AB3AC2CD6C85800EB85F8;
