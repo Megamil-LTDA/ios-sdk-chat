@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MegamilChat"
-  spec.version      = "0.0.4"
+  spec.version      = "0.0.5"
   spec.summary      = "Connect LLMChat on your app"
   spec.swift_versions = ['5.0']
 
