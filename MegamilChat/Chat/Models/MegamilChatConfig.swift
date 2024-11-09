@@ -50,7 +50,7 @@ public struct MegamilChatConfig: Codable {
         typeEndPoints: String = "typeEndPoints",
         messages: [ChatMessage] = [],
         suggestions: [String] = [],
-        placeholder: String = "Digite uma mensagem...",
+        placeholder: String = L10n.enterAMessage,
         sendButtonIcon: String = "paperplane.fill",
         recordButtonIcon: String = "mic.fill",
         buttonColor: String = "#0000FF",
@@ -146,7 +146,7 @@ public struct MegamilChatConfig: Codable {
         typeEndPoints = TypeEndPoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndPoints) ?? "typeEndPoints")
         messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
         suggestions = try container.decodeIfPresent([String].self, forKey: .suggestions) ?? []
-        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? "Digite uma mensagem..."
+        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
         sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
         recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
         buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")

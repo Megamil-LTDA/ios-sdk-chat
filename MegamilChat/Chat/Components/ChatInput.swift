@@ -7,7 +7,7 @@ import SwiftUI
 
 struct ChatInput: View {
     @Binding var messageText: String
-    var placeholder: String = "Digite uma mensagem..."
+    var placeholder: String = L10n.enterAMessage
     var sendButtonIcon: String = "paperplane.fill"
     var recordButtonIcon: String = "mic.fill"
     var buttonColor: Color = Color.blue

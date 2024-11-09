@@ -77,7 +77,7 @@ struct HomeView: View {
         
         //Exemplo rápido: Usando os outros valores como default, passando o bearer token para Megamil Chat.
 //        let config = MegamilChatConfig(
-//            bearerToken: "0564f2ba7db311ef8c940242ac13...4" /* Token de autenticação para requisições OBRIGATÓRIO*/
+//            bearerToken: "..." /* Token de autenticação para requisições OBRIGATÓRIO*/
 //        )
         
         //Exemplo completo, customizando todos os campos
@@ -111,7 +111,7 @@ struct HomeView: View {
             contact: "", /* Contato do usuário (opcional) */
             baseUrl: "", /* URL base para o serviço de mensagens (Somente para chamadas customizadas) */
             endpoint: "", /* Endpoint específico para a API de mensagens (Somente para chamadas customizadas) */
-            bearerToken: "0564f2ba7db311ef8c940242ac130004", /* Token de autenticação para requisições OBRIGATÓRIO*/
+            bearerToken: "...", /* Token de autenticação para requisições OBRIGATÓRIO*/
             allowAudioRecording: false, /* Permitir gravação de áudio pelo usuário [Atualmente desativado]*/
             meBubbleColor: "#0000FF", /* Cor do balão de mensagens enviadas pelo usuário */
             meBubbleTextColor: "#FFFFFF", /* Cor do texto das mensagens enviadas pelo usuário */

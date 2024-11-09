@@ -164,7 +164,7 @@ open class ApiLayer {
                 return
             }
             
-            if(!UIDevice.isConnected) {
+            if(!UIDevice.isConnected()) {
                 let error = NSError(domain:"", code:500, userInfo:[
                     NSLocalizedDescriptionKey :  NSLocalizedString("Unauthorized", value: "Erro de conexão", comment: "") ,
                     NSLocalizedFailureReasonErrorKey : NSLocalizedString("Unauthorized", value: "Parece que estamos com problemas de conexão.", comment: "")

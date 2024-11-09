@@ -7,6 +7,7 @@
 import Foundation
 import UIKit
 import SystemConfiguration.CaptiveNetwork
+import Network
 
 // MARK: UIDevice
 public extension UIDevice {
@@ -175,25 +176,27 @@ public extension UIDevice {
      Validate if there is an internet connection
      ------------------------------------
      */
-    static let isConnected: Bool = {
-        var zeroAddress = sockaddr_in()
-        zeroAddress.sin_len = UInt8(MemoryLayout.size(ofValue: zeroAddress))
-        zeroAddress.sin_family = sa_family_t(AF_INET)
+    static func isConnected() -> Bool {
+        let monitor = NWPathMonitor()
+        let queue = DispatchQueue(label: "NetworkMonitor")
+        var isConnected = false
         
-        let defaultRouteReachability = withUnsafePointer(to: &zeroAddress) {
-            $0.withMemoryRebound(to: sockaddr.self, capacity: 1) {zeroSockAddress in
-                SCNetworkReachabilityCreateWithAddress(nil, zeroSockAddress)
+        monitor.pathUpdateHandler = { path in
+            if path.status == .satisfied {
+                isConnected = true
+            } else {
+                isConnected = false
             }
         }
         
-        var flags = SCNetworkReachabilityFlags()
-        if !SCNetworkReachabilityGetFlags(defaultRouteReachability!, &flags) {
-            return false
-        }
-        let isReachable = flags.contains(.reachable)
-        let needsConnection = flags.contains(.connectionRequired)
-        return (isReachable && !needsConnection)
-    }()
+        monitor.start(queue: queue)
+        
+            // Espera um pouco para garantir que o monitor tenha tempo de atualizar o status
+        sleep(1)
+        
+        monitor.cancel()
+        return isConnected
+    }
     
         // Returns the name of the wifi network
         // periphery:ignore
