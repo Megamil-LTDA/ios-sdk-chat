@@ -166,3 +166,51 @@ public struct MegamilChatConfig: Codable {
     }
 
 }
+
+/* Exemplo do json da request
+ {
+     "backgroundColor": "#FFFFFF",
+     "canDragging": true,
+     "showBorder": true,
+     "showInputBorder": true,
+     "showReturnButton": false,
+     "themName": "[Megamil Chat]",
+     "presentationStyle": "fullscreen",
+     "typeEndPoints": "MegamilChat",
+     "messages": [
+         {
+         "text": "Olá, sou o Megamil Chat! como posso ajudar?",
+         "timestamp": "05/11/2024 00:00",
+         "isFromMe": false
+         }
+     ],
+     "suggestions": [
+        "Sugestão 1..."
+     ],
+     "placeholder": "Digite uma mensagem...",
+     "sendButtonIcon": "paperplane.fill",
+     "recordButtonIcon": "mic.fill",
+     "buttonColor": "#0000FF",
+     "borderColor": [
+        "#008000",
+        "#0000FF",
+        "#FF0000"
+     ],
+     "borderInputColor": [
+        "#FFA500",
+        "#FFC0CB",
+        "#808080"
+     ],
+     "ref": "",
+     "name": "",
+     "contact": "",
+     "baseUrl": "",
+     "endpoint": "",
+     "bearerToken": "0564f2ba7db311ef8c940242ac130004",
+     "allowAudioRecording": false,
+     "meBubbleColor": "#0000FF",
+     "meBubbleTextColor": "#FFFFFF",
+     "themBubbleColor": "#008000",
+     "themBubbleTextColor": "#FFFFFF"
+ }
+ */
