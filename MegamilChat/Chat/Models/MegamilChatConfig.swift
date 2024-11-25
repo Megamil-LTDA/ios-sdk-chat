@@ -13,49 +13,127 @@ import SwiftUI
 import Foundation
 
 // MARK: - MegamilChatConfig
+public struct ChatConfigModel: Codable {
+    public let status: Int?
+    public let msg: String?
+    public let data: MegamilChatConfig?
+    
+    public init(status: Int?, msg: String?, data: MegamilChatConfig?) {
+        self.status = status
+        self.msg = msg
+        self.data = data
+    }
+}
+
 public struct MegamilChatConfig: Codable {
-    public var backgroundColor: Color
-    public var canDragging, showBorder, showInputBorder, showReturnButton: Bool
-    public var themName: String
-    public var presentationStyle: PresentationStyle
-    public var typeEndPoints: TypeEndPoints = .MegamilChat
-    public var messages: [ChatMessage]
-    public var suggestions: [String]
-    public var placeholder: String
-    public var sendButtonIcon: String
-    public var recordButtonIcon: String
-    public var buttonColor: Color
-    public var borderColor: [Color]
-    public var borderInputColor: [Color]
-    public var ref: String
-    public var name: String
-    public var contact: String
-    public var baseUrl: String
-    public var endpoint: String
-    public var bearerToken: String
-    public var allowAudioRecording: Bool
-    public var meBubbleColor: Color
-    public var meBubbleTextColor: Color
-    public var themBubbleColor: Color
-    public var themBubbleTextColor: Color
+    public var backgroundColor: Color = Color(hex: "FFFFFFFF")
+    public var canDragging: Bool = true
+    public var showBorder: Bool = true
+    public var showInputBorder: Bool = true
+    public var showReturnButton: Bool = true
+    public var themName: String = ""
+    public var presentationStyle: PresentationStyle = .fullscreen
+    public var typeEndpoints: TypeEndpoints = .MegamilChat
+    public var messages: [ChatMessage] = []
+    public var listSuggestions: [String]? // Permite que seja nulo
+    public var placeholder: String = L10n.enterAMessage
+    public var sendButtonIcon: String = "paperplane.fill"
+    public var recordButtonIcon: String = "mic.fill"
+    public var buttonColor: Color = Color(hex: "#0000FF")
+    public var listBorderColors: [Color] = []
+    public var listInputBorderColors: [Color] = []
+    public var ref: String = ""
+    public var name: String = ""
+    public var contact: String = ""
+    public var baseUrl: String = ""
+    public var endpoint: String = ""
+    public var bearerToken: String = ""
+    public var allowAudioRecording: Bool = false
+    public var meBubbleColor: Color = Color(hex: "0000FFFF")
+    public var meBubbleTextColor: Color = Color(hex: "FFFFFFFF")
+    public var themBubbleColor: Color = Color(hex: "008000FF")
+    public var themBubbleTextColor: Color = Color(hex: "FFFFFFFF")
+    
+    public enum CodingKeys: String, CodingKey {
+        case backgroundColor = "background_color"
+        case canDragging = "can_dragging"
+        case showBorder = "show_border"
+        case showInputBorder = "show_input_border"
+        case showReturnButton = "show_return_button"
+        case themName = "them_name"
+        case presentationStyle = "presentation_style"
+        case typeEndpoints = "type_endpoints"
+        case messages
+        case listSuggestions = "list_suggestions"
+        case placeholder
+        case sendButtonIcon = "send_button_icon"
+        case recordButtonIcon = "record_button_icon"
+        case buttonColor = "button_color"
+        case listBorderColors = "list_border_colors"
+        case listInputBorderColors = "list_input_border_colors"
+        case ref
+        case name
+        case contact
+        case baseUrl = "base_url"
+        case endpoint
+        case bearerToken = "bearer_token"
+        case allowAudioRecording = "allow_audio_recording"
+        case meBubbleColor = "me_bubble_color"
+        case meBubbleTextColor = "me_bubble_text_color"
+        case themBubbleColor = "them_bubble_color"
+        case themBubbleTextColor = "them_bubble_text_color"
+    }
+    
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.container(keyedBy: CodingKeys.self)
+        backgroundColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? "FFFFFFFF")
+        canDragging = try container.decodeIfPresent(Bool.self, forKey: .canDragging) ?? true
+        showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
+        showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
+        showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
+        themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
+        presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
+        typeEndpoints = TypeEndpoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndpoints) ?? "MegamilChat")
+        messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
+        if let suggestionsString = try container.decodeIfPresent(String.self, forKey: .listSuggestions) {
+            listSuggestions = suggestionsString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+        }
+        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
+        sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
+        recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
+        buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
+        listBorderColors = (try container.decodeIfPresent(String.self, forKey: .listBorderColors)?.split(separator: ",").map { Color(hex: String($0)) }) ?? []
+        listInputBorderColors = (try container.decodeIfPresent(String.self, forKey: .listInputBorderColors)?.split(separator: ",").map { Color(hex: String($0)) }) ?? []
+        ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
+        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+        contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
+        baseUrl = try container.decodeIfPresent(String.self, forKey: .baseUrl) ?? ""
+        endpoint = try container.decodeIfPresent(String.self, forKey: .endpoint) ?? ""
+        bearerToken = try container.decodeIfPresent(String.self, forKey: .bearerToken) ?? ""
+        allowAudioRecording = try container.decodeIfPresent(Bool.self, forKey: .allowAudioRecording) ?? false
+        meBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleColor) ?? "0000FFFF")
+        meBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleTextColor) ?? "FFFFFFFF")
+        themBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleColor) ?? "008000FF")
+        themBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleTextColor) ?? "FFFFFFFF")
+    }
     
     public init(
-        backgroundColor: String = "#FFFFFF",
+        backgroundColor: String = "FFFFFFFF",
         canDragging: Bool = true,
         showBorder: Bool = true,
         showInputBorder: Bool = true,
         showReturnButton: Bool = true,
         themName: String = "",
         presentationStyle: String = "fullscreen",
-        typeEndPoints: String = "typeEndPoints",
+        typeEndpoints: String = "MegamilChat",
         messages: [ChatMessage] = [],
-        suggestions: [String] = [],
+        listSuggestions: String = "",
         placeholder: String = L10n.enterAMessage,
         sendButtonIcon: String = "paperplane.fill",
         recordButtonIcon: String = "mic.fill",
         buttonColor: String = "#0000FF",
-        borderColor: [String] = ["#008000", "#0000FF", "#FF0000"],
-        borderInputColor: [String] = ["#FFA500", "#FFC0CB", "#808080"],
+        listBorderColors: String = "FFFFFFFF,FFFF00FF,FF0000FF",
+        listInputBorderColors: String = "008000FF,0000FFFF,FFA500FF",
         ref: String = "",
         name: String = "",
         contact: String = "",
@@ -63,10 +141,10 @@ public struct MegamilChatConfig: Codable {
         endpoint: String = "",
         bearerToken: String = "",
         allowAudioRecording: Bool = false,
-        meBubbleColor: String = "#0000FF",
-        meBubbleTextColor: String = "#FFFFFF",
-        themBubbleColor: String = "#008000",
-        themBubbleTextColor: String = "#FFFFFF"
+        meBubbleColor: String = "0000FFFF",
+        meBubbleTextColor: String = "FFFFFFFF",
+        themBubbleColor: String = "008000FF",
+        themBubbleTextColor: String = "FFFFFFFF"
     ) {
         self.backgroundColor = Color(hex: backgroundColor)
         self.canDragging = canDragging
@@ -75,15 +153,15 @@ public struct MegamilChatConfig: Codable {
         self.showReturnButton = showReturnButton
         self.themName = themName
         self.presentationStyle = PresentationStyle.fromString(presentationStyle)
-        self.typeEndPoints = TypeEndPoints.fromString(typeEndPoints)
+        self.typeEndpoints = TypeEndpoints.fromString(typeEndpoints)
         self.messages = messages
-        self.suggestions = suggestions
+        self.listSuggestions = listSuggestions.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
         self.placeholder = placeholder
         self.sendButtonIcon = sendButtonIcon
         self.recordButtonIcon = recordButtonIcon
         self.buttonColor = Color(hex: buttonColor)
-        self.borderColor = borderColor.map { Color(hex: $0) }
-        self.borderInputColor = borderInputColor.map { Color(hex: $0) }
+        self.listBorderColors = listBorderColors.split(separator: ",").map { Color(hex: String($0)) }
+        self.listInputBorderColors = listInputBorderColors.split(separator: ",").map { Color(hex: String($0)) }
         self.ref = ref
         self.name = name
         self.contact = contact
@@ -97,75 +175,40 @@ public struct MegamilChatConfig: Codable {
         self.themBubbleTextColor = Color(hex: themBubbleTextColor)
     }
     
-        // Codificação manual das cores como hexadecimal
-    enum CodingKeys: String, CodingKey {
-        case backgroundColor, canDragging, showBorder, showInputBorder, showReturnButton, themName, presentationStyle, typeEndPoints, messages, suggestions, placeholder, sendButtonIcon, recordButtonIcon, buttonColor, borderColor, borderInputColor,
-             ref, name, contact, baseUrl, endpoint, bearerToken, allowAudioRecording, meBubbleColor, meBubbleTextColor, themBubbleColor, themBubbleTextColor
-    }
-    
-    public func encode(to encoder: Encoder) throws {
-        var container = encoder.container(keyedBy: CodingKeys.self)
-        try container.encode(backgroundColor.toHex(), forKey: .backgroundColor)
-        try container.encode(canDragging, forKey: .canDragging)
-        try container.encode(showBorder, forKey: .showBorder)
-        try container.encode(showInputBorder, forKey: .showInputBorder)
-        try container.encode(showReturnButton, forKey: .showReturnButton)
-        try container.encode(themName, forKey: .themName)
-        try container.encode(presentationStyle, forKey: .presentationStyle)
-        try container.encode(typeEndPoints, forKey: .typeEndPoints)
-        try container.encode(messages, forKey: .messages)
-        try container.encode(suggestions, forKey: .suggestions)
-        try container.encode(placeholder, forKey: .placeholder)
-        try container.encode(sendButtonIcon, forKey: .sendButtonIcon)
-        try container.encode(recordButtonIcon, forKey: .recordButtonIcon)
-        try container.encode(buttonColor.toHex(), forKey: .buttonColor)
-        try container.encode(borderColor.map { $0.toHex() }, forKey: .borderColor)
-        try container.encode(borderInputColor.map { $0.toHex() }, forKey: .borderInputColor)
-        try container.encode(ref, forKey: .ref)
-        try container.encode(name, forKey: .name)
-        try container.encode(contact, forKey: .contact)
-        try container.encode(baseUrl, forKey: .baseUrl)
-        try container.encode(endpoint, forKey: .endpoint)
-        try container.encode(bearerToken, forKey: .bearerToken)
-        try container.encode(allowAudioRecording, forKey: .allowAudioRecording)
-        try container.encode(meBubbleColor.toHex(), forKey: .meBubbleColor)
-        try container.encode(meBubbleTextColor.toHex(), forKey: .meBubbleTextColor)
-        try container.encode(themBubbleColor.toHex(), forKey: .themBubbleColor)
-        try container.encode(themBubbleTextColor.toHex(), forKey: .themBubbleTextColor)
-    }
-    
-    public init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        backgroundColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? "#FFFFFF")
-        canDragging = try container.decodeIfPresent(Bool.self, forKey: .canDragging) ?? true
-        showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
-        showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
-        showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
-        themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
-        presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
-        typeEndPoints = TypeEndPoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndPoints) ?? "typeEndPoints")
-        messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
-        suggestions = try container.decodeIfPresent([String].self, forKey: .suggestions) ?? []
-        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
-        sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
-        recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
-        buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
-        borderColor = (try container.decodeIfPresent([String].self, forKey: .borderColor) ?? ["#008000", "#0000FF", "#FF0000"]).map { Color(hex: $0) }
-        borderInputColor = (try container.decodeIfPresent([String].self, forKey: .borderInputColor) ?? ["#FFA500", "#FFC0CB", "#808080"]).map { Color(hex: $0) }
-        ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
-        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
-        contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
-        baseUrl = try container.decodeIfPresent(String.self, forKey: .baseUrl) ?? ""
-        endpoint = try container.decodeIfPresent(String.self, forKey: .endpoint) ?? ""
-        bearerToken = try container.decodeIfPresent(String.self, forKey: .bearerToken) ?? ""
-        allowAudioRecording = try container.decodeIfPresent(Bool.self, forKey: .allowAudioRecording) ?? false
-        meBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleColor) ?? "#0000FF")
-        meBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleTextColor) ?? "#FFFFFF")
-        themBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleColor) ?? "#008000")
-        themBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleTextColor) ?? "#FFFFFF")
-    }
-
 }
+
+    
+//    public init(from decoder: Decoder) throws {
+//        let container = try decoder.container(keyedBy: CodingKeys.self)
+//        backgroundColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? "#FFFFFF")
+//        canDragging = try container.decodeIfPresent(Bool.self, forKey: .canDragging) ?? true
+//        showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
+//        showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
+//        showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
+//        themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
+//        presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
+//        typeEndpoints = TypeEndpoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndpoints) ?? "typeEndPoints")
+//        messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
+//        suggestions = try container.decodeIfPresent([String].self, forKey: .suggestions) ?? []
+//        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
+//        sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
+//        recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
+//        buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
+//        listBorderColors = (try container.decodeIfPresent([String].self, forKey: .listBorderColors) ?? ["#008000", "#0000FF", "#FF0000"]).map { Color(hex: $0) }
+//        listInputBorderColors = (try container.decodeIfPresent([String].self, forKey: .listInputBorderColors) ?? ["#FFA500", "#FFC0CB", "#808080"]).map { Color(hex: $0) }
+//        ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
+//        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
+//        contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
+//        baseUrl = try container.decodeIfPresent(String.self, forKey: .baseUrl) ?? ""
+//        endpoint = try container.decodeIfPresent(String.self, forKey: .endpoint) ?? ""
+//        bearerToken = try container.decodeIfPresent(String.self, forKey: .bearerToken) ?? ""
+//        allowAudioRecording = try container.decodeIfPresent(Bool.self, forKey: .allowAudioRecording) ?? false
+//        meBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleColor) ?? "#0000FF")
+//        meBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleTextColor) ?? "#FFFFFF")
+//        themBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleColor) ?? "#008000")
+//        themBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleTextColor) ?? "#FFFFFF")
+//    }
+
 
 /* Exemplo do json da request
  {
@@ -176,7 +219,7 @@ public struct MegamilChatConfig: Codable {
      "showReturnButton": false,
      "themName": "[Megamil Chat]",
      "presentationStyle": "fullscreen",
-     "typeEndPoints": "MegamilChat",
+     "typeEndpoints": "MegamilChat",
      "messages": [
          {
          "text": "Olá, sou o Megamil Chat! como posso ajudar?",
@@ -184,23 +227,13 @@ public struct MegamilChatConfig: Codable {
          "isFromMe": false
          }
      ],
-     "suggestions": [
-        "Sugestão 1..."
-     ],
+     "suggestions": "Sugestão 1...|Sugestão 2...",
      "placeholder": "Digite uma mensagem...",
      "sendButtonIcon": "paperplane.fill",
      "recordButtonIcon": "mic.fill",
      "buttonColor": "#0000FF",
-     "borderColor": [
-        "#008000",
-        "#0000FF",
-        "#FF0000"
-     ],
-     "borderInputColor": [
-        "#FFA500",
-        "#FFC0CB",
-        "#808080"
-     ],
+     "borderColor": "008000FF,0000FFFF,FF0000FF",
+     "borderInputColor": "FFA500FF,FFC0CBFF",808080FF",
      "ref": "",
      "name": "",
      "contact": "",
@@ -212,5 +245,34 @@ public struct MegamilChatConfig: Codable {
      "meBubbleTextColor": "#FFFFFF",
      "themBubbleColor": "#008000",
      "themBubbleTextColor": "#FFFFFF"
+ }
+ */
+
+/* Exemplo do json da request base
+ {
+     "background_color": "FFFFFFFF",
+     "show_border": true,
+     "show_input_border": true,
+     "them_name": "[Megamil AI]",
+     "placeholder": "Digite uma mensagem...",
+     "send_button_icon": "paperplane.fill",
+     "record_button_icon": "mic.fill",
+     "button_color": "0000FFFF",
+     "allow_audio_recording": false,
+     "me_bubble_color": "0000FFFF",
+     "me_bubble_text_color": "FFFFFFFF",
+     "them_bubble_color": "008000FF",
+     "them_bubble_text_color": "FFFFFFFF",
+     "list_suggestions": "Olá,Como posso ajudar?,Fale mais",
+     "messages": [
+         {
+            "text": "Olá, sou o Megamil Chat! como posso ajudar?",
+            "timestamp": "05/11/2024 00:00",
+            "isFromMe": false
+         }
+     ],
+     "list_border_colors": "FF5733FF,FFC300FF,DAF7A6FF",
+     "list_input_border_colors": "C70039FF,900C3FFF,581845FF",
+     "bearer_token": "0564f2ba7db311ef8c940242ac130004"
  }
  */

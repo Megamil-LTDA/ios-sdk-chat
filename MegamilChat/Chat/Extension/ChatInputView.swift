@@ -16,7 +16,7 @@ extension MegamilChatView {
             sendButtonIcon: config.sendButtonIcon,
             recordButtonIcon: config.recordButtonIcon,
             buttonColor: config.buttonColor,
-            borderInputColor: config.borderInputColor,
+            borderInputColor: config.listInputBorderColors,
             showInputBorder: config.showInputBorder,
             borderWidth: 1,
             onSend: {

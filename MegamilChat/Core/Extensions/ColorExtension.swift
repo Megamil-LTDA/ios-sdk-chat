@@ -1,9 +1,3 @@
-//
-//  ColorExtension.swift
-//  MegamilChat
-//
-//  Created by Eduardo dos santos on 05/11/24.
-//
 import SwiftUI
 import Foundation
 
@@ -25,21 +19,52 @@ extension UIColor {
         hexSanitized = hexSanitized.replacingOccurrences(of: "#", with: "")
         
         var rgb: UInt64 = 0
-        Scanner(string: hexSanitized).scanHexInt64(&rgb)
+        guard Scanner(string: hexSanitized).scanHexInt64(&rgb) else { return nil }
         
-        let r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
-        let g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
-        let b = CGFloat(rgb & 0x0000FF) / 255.0
-        let a = CGFloat(1.0)
+        let length = hexSanitized.count
+        let r, g, b, a: CGFloat
+        
+        if length == 8 { // RGBA
+            r = CGFloat((rgb & 0xFF000000) >> 24) / 255.0
+            g = CGFloat((rgb & 0x00FF0000) >> 16) / 255.0
+            b = CGFloat((rgb & 0x0000FF00) >> 8) / 255.0
+            a = CGFloat(rgb & 0x000000FF) / 255.0
+        } else if length == 6 { // RGB
+            r = CGFloat((rgb & 0xFF0000) >> 16) / 255.0
+            g = CGFloat((rgb & 0x00FF00) >> 8) / 255.0
+            b = CGFloat(rgb & 0x0000FF) / 255.0
+            a = 1.0
+        } else {
+            return nil
+        }
         
         self.init(red: r, green: g, blue: b, alpha: a)
     }
     
     func toHex() -> String? {
-        guard let components = cgColor.components, components.count >= 3 else { return nil }
+        guard let components = cgColor.components, components.count >= 4 else { return nil }
         let r = Float(components[0])
         let g = Float(components[1])
         let b = Float(components[2])
-        return String(format: "#%02lX%02lX%02lX", lroundf(r * 255), lroundf(g * 255), lroundf(b * 255))
+        let a = Float(components[3])
+        return String(format: "#%02lX%02lX%02lX%02lX",
+                      lroundf(r * 255),
+                      lroundf(g * 255),
+                      lroundf(b * 255),
+                      lroundf(a * 255))
+    }
+}
+
+    // Conformidade de Color ao protocolo Codable
+extension Color: Codable {
+    public init(from decoder: Decoder) throws {
+        let container = try decoder.singleValueContainer()
+        let hex = try container.decode(String.self)
+        self = Color(hex: hex)
+    }
+    
+    public func encode(to encoder: Encoder) throws {
+        var container = encoder.singleValueContainer()
+        try container.encode(self.toHex())
     }
 }

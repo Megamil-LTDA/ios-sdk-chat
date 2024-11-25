@@ -76,7 +76,7 @@ open class ApiLayer {
     
     /// Custom header
     /// @Param customHeader: Required: define custom header
-    func customizeHeader(customHeader: [[String:String]]) {
+    public func customizeHeader(customHeader: [[String:String]]) {
         self.customHeader = customHeader
     }
     

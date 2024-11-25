@@ -17,20 +17,20 @@ class ChatViewModel: ObservableObject {
     var baseUrl: String = ""
     var endpoint: String = ""
     var bearerToken: String = ""
-    var typeEndPoints: TypeEndPoints = .MegamilChat
+    var typeEndpoints: TypeEndpoints = .MegamilChat
     
     var allowedSHAFingerprints: [String] = []
     
-    init(baseUrl: String = "", endpoint: String = "", ref: String = "", name: String = "", contact: String = "", bearerToken: String, typeEndPoints: TypeEndPoints, allowedSHAFingerprints: [String] = []) {
+    init(baseUrl: String = "", endpoint: String = "", ref: String = "", name: String = "", contact: String = "", bearerToken: String, typeEndpoints: TypeEndpoints, allowedSHAFingerprints: [String] = []) {
         
         self.bearerToken = bearerToken
-        self.typeEndPoints = typeEndPoints
+        self.typeEndpoints = typeEndpoints
         self.ref = ref
         self.name = name
         self.contact = contact
         self.allowedSHAFingerprints = allowedSHAFingerprints
         
-        switch(typeEndPoints) {
+        switch(typeEndpoints) {
             case .OpenAI:
                 self.baseUrl = "https://api.openai.com/v1"
                 self.endpoint = "/chat/completions"
@@ -46,7 +46,7 @@ class ChatViewModel: ObservableObject {
     }
     
     func sendMessage(message: String, callBack:@escaping (Bool?, ChatMessage?) -> Void) {
-        switch(typeEndPoints) {
+        switch(typeEndpoints) {
             case .OpenAI:
                 self.sendMessageOpenAi(message: message) { success, response in
                     return callBack(success, response)
@@ -145,5 +145,5 @@ class ChatViewModel: ObservableObject {
         })
         
     }
-    
+        
 }

@@ -25,8 +25,9 @@ public struct MegamilChatView: View {
         self.config = config
         self.onClose = onClose
         self._messages = State(initialValue: config.messages)
-        self._suggestions = State(initialValue: config.suggestions)
-        self.viewModel = ChatViewModel(baseUrl: config.baseUrl, endpoint: config.endpoint, ref: config.ref, name: config.name, contact: config.contact, bearerToken: config.bearerToken, typeEndPoints: config.typeEndPoints)
+        let suggestionsArray = config.listSuggestions
+        self._suggestions = State(initialValue: suggestionsArray ?? [])
+        self.viewModel = ChatViewModel(baseUrl: config.baseUrl, endpoint: config.endpoint, ref: config.ref, name: config.name, contact: config.contact, bearerToken: config.bearerToken, typeEndpoints: config.typeEndpoints)
     }
     
     public var body: some View {
@@ -119,7 +120,7 @@ public struct MegamilChatView: View {
         BorderedColorsView(
             cornerRadius: cornerRadius,
             borderWidth: 6,
-            colors: config.borderColor
+            colors: config.listBorderColors
         )
         .frame(width: config.presentationStyle == .floating ? UIScreen.main.bounds.width * 0.9 : UIScreen.main.bounds.width, height: config.presentationStyle.sheetHeight())
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius))
