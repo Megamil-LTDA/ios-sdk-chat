@@ -7,12 +7,13 @@ import SwiftUI
 
 struct MessageBubble: View {
     var message: ChatMessage
+    var customMessage: String?
     var backgroundColor: Color
     var textColor: Color
     
     var body: some View {
         VStack(alignment: message.isFromMe ? .trailing : .leading) {
-            MessageContent(text: message.text,
+            MessageContent(text: customMessage != nil ? customMessage! : message.text,
                            timestamp: message.timestamp,
                            backgroundColor: backgroundColor,
                            textColor: textColor,
@@ -33,7 +34,7 @@ struct MessageContent: View {
         VStack(alignment: isFromMe ? .trailing : .leading) {
             Text(timestamp)
                 .font(.footnote)
-                .foregroundColor(.white)
+                .foregroundColor(textColor.opacity(0.8))
                 .multilineTextAlignment(isFromMe ? .trailing : .leading)
             
             Text(text)

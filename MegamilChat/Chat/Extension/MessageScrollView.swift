@@ -43,7 +43,8 @@ extension MegamilChatView {
                                         .frame(maxWidth: .infinity, alignment: .trailing)
                                         .scaleEffect(y: -1)
                                 } else {
-                                    MessageBubble(message: message, backgroundColor: config.themBubbleColor, textColor: config.themBubbleTextColor)
+                                    let customMessage = config.themName != "" ? "\(config.themName) \(message.text)" : message.text
+                                    MessageBubble(message: message, customMessage: customMessage, backgroundColor: config.themBubbleColor, textColor: config.themBubbleTextColor)
                                         .frame(maxWidth: .infinity, alignment: .leading)
                                         .scaleEffect(y: -1)
                                 }
