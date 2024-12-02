@@ -175,7 +175,7 @@ open class ApiLayer {
                 return
             }
             
-//            if(showLoading) { UIViewLoadding.progressBarDisplayer(msg: customLoadText, true) } //@todo
+//            if(showLoading) { UIViewLoadding.progressBarDisplayer(msg: customLoadText, true) } //TODO
             
             DispatchQueue.main.async { [self] in
                 
@@ -279,12 +279,12 @@ open class ApiLayer {
                     
                     if let statusCode = responseHttp?.statusCode {
                         if (statusCode == 401 || statusCode == 403) && !skipStatusValidation {
-                            //@todo
+                            //TODO
                         }
                     }
                     
                     if(returnRawData) {
-//                        UIViewLoadding.removeProgressBarDisplay() //@todo
+//                        UIViewLoadding.removeProgressBarDisplay() //TODO
                         completion(data,error)
                         return
                     } else {
@@ -303,7 +303,7 @@ open class ApiLayer {
                         SafePrint(error.userInfo)
                         if(showLoading) {
                             DispatchQueue.main.async {
-//                                UIViewLoadding.removeProgressBarDisplay() @todo
+//                                UIViewLoadding.removeProgressBarDisplay() TODO
                                 completion(nil,error)
                             }
                         } else {
@@ -324,7 +324,7 @@ open class ApiLayer {
                     
                     if(showLoading) {
                         DispatchQueue.main.async {
-//                            UIViewLoadding.removeProgressBarDisplay() //@todo
+//                            UIViewLoadding.removeProgressBarDisplay() //TODO
                             completion(data,error)
                         }
                     } else {
@@ -340,7 +340,7 @@ open class ApiLayer {
     }
     
     func preValidations(forceSkip: Bool, completion: @escaping (Bool, String?) -> Void) {
-        //@todo
+        //TODO
         completion(true,nil)
     }
     

@@ -39,11 +39,12 @@ struct ChatInput: View {
                     showInputBorder ? BorderedColorsView(
                         cornerRadius: 8,
                         borderWidth: borderWidth,
+                        usingAnimation: true,
                         colors: borderInputColor
                     ) : nil
                 )
                 .padding(.trailing, 8)
-                .submitLabel(messageText == "" ? .send : .return) //@todo não funciona
+                .submitLabel(messageText == "" ? .send : .return) //TODO não funciona
                 .onAppear {
                     NotificationCenter.default.addObserver(
                         forName: UIResponder.keyboardWillShowNotification,

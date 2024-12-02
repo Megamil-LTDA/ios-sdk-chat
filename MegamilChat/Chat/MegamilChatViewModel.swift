@@ -55,7 +55,7 @@ class ChatViewModel: ObservableObject {
                 self.sendMessageMegamil(message: message) { success, response in
                     return callBack(success, response)
                 }
-            case .CustomURL: //@todo testar
+            case .CustomURL: //TODO testar
                 self.sendMessageCustom(message: message) { success, response in
                     return callBack(success, response)
                 }

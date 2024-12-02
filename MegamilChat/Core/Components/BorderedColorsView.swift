@@ -5,11 +5,12 @@
 //
 import SwiftUI
 
+// TODO: Otimizar desempenho. Testar a animação em iPhones com notch, sem notch e com Dynamic Island para garantir compatibilidade e fluidez.
 public struct BorderedColorsView: View {
     public var cornerRadius: CGFloat
     public var borderWidth: CGFloat
     public var usingAnimation: Bool = false
-    @State private var startAnimation = false
+    @State private var animationAngle: Double = 0
     public var colors: [Color] = [
         Color.red.opacity(0.5),
         Color.orange.opacity(0.5),
@@ -46,19 +47,27 @@ public struct BorderedColorsView: View {
                         AngularGradient(
                             gradient: Gradient(colors: colors),
                             center: .center,
-                            angle: .degrees(startAnimation ? 360 : 0)
+                            angle: .degrees(animationAngle)
                         ),
                         lineWidth: borderWidth
                     )
                     .blur(radius: 3)
             )
             .onAppear {
-                withAnimation(Animation.linear(duration: 8)
-                    .repeatForever(autoreverses: false)) {
-                        if(usingAnimation) {
-                            startAnimation = true
-                        }
-                    }
+                if usingAnimation {
+                    startAnimation()
+                }
             }
+    }
+    
+    private func startAnimation() {
+        DispatchQueue.main.async {
+            Timer.scheduledTimer(withTimeInterval: 0.35, repeats: true) { timer in
+                animationAngle += 0.3
+                if !usingAnimation {
+                    timer.invalidate()
+                }
+            }
+        }
     }
 }

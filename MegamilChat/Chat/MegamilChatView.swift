@@ -120,6 +120,7 @@ public struct MegamilChatView: View {
         BorderedColorsView(
             cornerRadius: cornerRadius,
             borderWidth: 6,
+            usingAnimation: true,
             colors: config.listBorderColors
         )
         .frame(width: config.presentationStyle == .floating ? UIScreen.main.bounds.width * 0.9 : UIScreen.main.bounds.width, height: config.presentationStyle.sheetHeight())

@@ -34,7 +34,7 @@ public class SafePrint {
             printItem = " [** PRINT_TRIM START **] Original size: \("\(printItem)".count)" + String("\(printItem)".prefix(20000)) + "..." + String("\(printItem)".suffix(100)) + " [** PRINT_TRIM END **] "
         }
         
-        if(savePrint && printItem is String) { /*@todo*/ }
+        if(savePrint && printItem is String) { /*TODO*/ }
         
         let after = "\n--------\n" + type.emoji + " |Safe Print Start| " + DateHelper.formatCurrentDateTime()
         

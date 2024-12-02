@@ -4,7 +4,7 @@
 //
 //  Created by Eduardo dos santos on 03/11/24.
 //
-import UIKit //@todo atualizar para SwiftUI
+import UIKit //TODO atualizar para SwiftUI
 
 class ToastView: UIView {
     
