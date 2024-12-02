@@ -31,6 +31,7 @@ public struct MegamilChatConfig: Codable {
     public var showBorder: Bool = true
     public var showInputBorder: Bool = true
     public var showReturnButton: Bool = true
+    public var typingEffect: Bool = true
     public var themName: String = ""
     public var presentationStyle: PresentationStyle = .fullscreen
     public var typeEndpoints: TypeEndpoints = .MegamilChat
@@ -60,6 +61,7 @@ public struct MegamilChatConfig: Codable {
         case showBorder = "show_border"
         case showInputBorder = "show_input_border"
         case showReturnButton = "show_return_button"
+        case typingEffect = "typing_effect"
         case themName = "them_name"
         case presentationStyle = "presentation_style"
         case typeEndpoints = "type_endpoints"
@@ -91,6 +93,7 @@ public struct MegamilChatConfig: Codable {
         showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
         showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
         showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
+        typingEffect = try container.decodeIfPresent(Bool.self, forKey: .typingEffect) ?? true
         themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
         presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
         typeEndpoints = TypeEndpoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndpoints) ?? "MegamilChat")
@@ -123,6 +126,7 @@ public struct MegamilChatConfig: Codable {
         showBorder: Bool = true,
         showInputBorder: Bool = true,
         showReturnButton: Bool = true,
+        typingEffect: Bool = true,
         themName: String = "",
         presentationStyle: String = "fullscreen",
         typeEndpoints: String = "MegamilChat",
@@ -151,6 +155,7 @@ public struct MegamilChatConfig: Codable {
         self.showBorder = showBorder
         self.showInputBorder = showInputBorder
         self.showReturnButton = showReturnButton
+        self.typingEffect = typingEffect
         self.themName = themName
         self.presentationStyle = PresentationStyle.fromString(presentationStyle)
         self.typeEndpoints = TypeEndpoints.fromString(typeEndpoints)
@@ -176,39 +181,6 @@ public struct MegamilChatConfig: Codable {
     }
     
 }
-
-    
-//    public init(from decoder: Decoder) throws {
-//        let container = try decoder.container(keyedBy: CodingKeys.self)
-//        backgroundColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .backgroundColor) ?? "#FFFFFF")
-//        canDragging = try container.decodeIfPresent(Bool.self, forKey: .canDragging) ?? true
-//        showBorder = try container.decodeIfPresent(Bool.self, forKey: .showBorder) ?? true
-//        showInputBorder = try container.decodeIfPresent(Bool.self, forKey: .showInputBorder) ?? true
-//        showReturnButton = try container.decodeIfPresent(Bool.self, forKey: .showReturnButton) ?? true
-//        themName = try container.decodeIfPresent(String.self, forKey: .themName) ?? ""
-//        presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
-//        typeEndpoints = TypeEndpoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndpoints) ?? "typeEndPoints")
-//        messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
-//        suggestions = try container.decodeIfPresent([String].self, forKey: .suggestions) ?? []
-//        placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
-//        sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
-//        recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
-//        buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
-//        listBorderColors = (try container.decodeIfPresent([String].self, forKey: .listBorderColors) ?? ["#008000", "#0000FF", "#FF0000"]).map { Color(hex: $0) }
-//        listInputBorderColors = (try container.decodeIfPresent([String].self, forKey: .listInputBorderColors) ?? ["#FFA500", "#FFC0CB", "#808080"]).map { Color(hex: $0) }
-//        ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
-//        name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
-//        contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
-//        baseUrl = try container.decodeIfPresent(String.self, forKey: .baseUrl) ?? ""
-//        endpoint = try container.decodeIfPresent(String.self, forKey: .endpoint) ?? ""
-//        bearerToken = try container.decodeIfPresent(String.self, forKey: .bearerToken) ?? ""
-//        allowAudioRecording = try container.decodeIfPresent(Bool.self, forKey: .allowAudioRecording) ?? false
-//        meBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleColor) ?? "#0000FF")
-//        meBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .meBubbleTextColor) ?? "#FFFFFF")
-//        themBubbleColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleColor) ?? "#008000")
-//        themBubbleTextColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .themBubbleTextColor) ?? "#FFFFFF")
-//    }
-
 
 /* Exemplo do json da request
  {
@@ -257,6 +229,7 @@ public struct MegamilChatConfig: Codable {
      "placeholder": "Digite uma mensagem...",
      "send_button_icon": "paperplane.fill",
      "record_button_icon": "mic.fill",
+     "typing_effect": true,
      "button_color": "0000FFFF",
      "allow_audio_recording": false,
      "me_bubble_color": "0000FFFF",

@@ -10,16 +10,42 @@ struct MessageBubble: View {
     var customMessage: String?
     var backgroundColor: Color
     var textColor: Color
+    var typingSpeed: Double?
+    
+    @State private var displayedText = ""
+    @State private var isTyping = false
     
     var body: some View {
         VStack(alignment: message.isFromMe ? .trailing : .leading) {
-            MessageContent(text: customMessage != nil ? customMessage! : message.text,
+            MessageContent(text: displayedText,
                            timestamp: message.timestamp,
                            backgroundColor: backgroundColor,
                            textColor: textColor,
                            isFromMe: message.isFromMe)
         }
         .padding(.bottom, 4)
+        .onAppear {
+            startTypingEffect()
+        }
+    }
+    
+    private func startTypingEffect() {
+        guard let typingSpeed = typingSpeed else {
+                // Se a velocidade de digitação não for passada, apenas exibe o texto imediatamente.
+            displayedText = customMessage ?? message.text
+            return
+        }
+        
+        let fullText = customMessage ?? message.text
+        var index = 0
+        Timer.scheduledTimer(withTimeInterval: typingSpeed, repeats: true) { timer in
+            if index < fullText.count {
+                displayedText.append(fullText[fullText.index(fullText.startIndex, offsetBy: index)])
+                index += 1
+            } else {
+                timer.invalidate()
+            }
+        }
     }
 }
 

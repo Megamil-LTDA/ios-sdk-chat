@@ -1,9 +1,9 @@
-    //
-    //  MessageScrollView.swift
-    //  MegamilChat
-    //
-    //  Created by Eduardo dos santos on 04/11/24.
-    //
+//
+//  MessageScrollView.swift
+//  MegamilChat
+//
+//  Created by Eduardo dos santos on 04/11/24.
+//
 import SwiftUI
 
 extension MegamilChatView {
@@ -11,7 +11,6 @@ extension MegamilChatView {
         ScrollViewReader { scrollProxy in
             ScrollView {
                 VStack(spacing: 0) {
-                        // Spacer flexível para empurrar conteúdo para baixo
                     Spacer(minLength: 0)
                     
                     if messages.isEmpty && !suggestions.isEmpty {
@@ -58,7 +57,8 @@ extension MegamilChatView {
                                         message: message,
                                         customMessage: customMessage,
                                         backgroundColor: config.themBubbleColor,
-                                        textColor: config.themBubbleTextColor
+                                        textColor: config.themBubbleTextColor,
+                                        typingSpeed: config.typingEffect ? 0.035 : nil
                                     )
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                     .scaleEffect(y: -1)
@@ -70,7 +70,7 @@ extension MegamilChatView {
                             .padding(.bottom, 4)
                         }
                     }
-                    .scaleEffect(y: -1) // Inverte apenas o LazyVStack
+                    .scaleEffect(y: -1)
                     .padding(.top, 10)
                     .onChange(of: messages) { newMessages in
                         if let lastMessageIndex = newMessages.indices.last {

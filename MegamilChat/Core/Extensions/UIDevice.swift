@@ -8,9 +8,14 @@ import Foundation
 import UIKit
 import SystemConfiguration.CaptiveNetwork
 import Network
+import CoreNFC
 
 // MARK: UIDevice
 public extension UIDevice {
+    
+    static func isNFCAvailable() -> Bool {
+        return NFCNDEFReaderSession.readingAvailable
+    }
     
     // periphery:ignore
     struct VpnChecker {
