@@ -6,8 +6,23 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		59BF5EE32CFE36EE00A00ADB /* MegamilChat.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 593AB3B62CD6C85800EB85F8 /* MegamilChat.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		59BF5EE42CFE36EE00A00ADB /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 593AB3AD2CD6C85800EB85F8 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 593AB3B52CD6C85800EB85F8;
+			remoteInfo = MegamilChat;
+		};
+/* End PBXContainerItemProxy section */
+
 /* Begin PBXFileReference section */
 		593AB3B62CD6C85800EB85F8 /* MegamilChat.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = MegamilChat.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		59BF5EDF2CFE36EE00A00ADB /* MegamilChatTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MegamilChatTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -29,6 +44,11 @@
 			path = MegamilChat;
 			sourceTree = "<group>";
 		};
+		59BF5EE02CFE36EE00A00ADB /* MegamilChatTests */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = MegamilChatTests;
+			sourceTree = "<group>";
+		};
 /* End PBXFileSystemSynchronizedRootGroup section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -39,6 +59,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59BF5EDC2CFE36EE00A00ADB /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				59BF5EE32CFE36EE00A00ADB /* MegamilChat.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
@@ -46,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				593AB3B82CD6C85800EB85F8 /* MegamilChat */,
+				59BF5EE02CFE36EE00A00ADB /* MegamilChatTests */,
 				593AB3B72CD6C85800EB85F8 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -54,6 +83,7 @@
 			isa = PBXGroup;
 			children = (
 				593AB3B62CD6C85800EB85F8 /* MegamilChat.framework */,
+				59BF5EDF2CFE36EE00A00ADB /* MegamilChatTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -94,6 +124,29 @@
 			productReference = 593AB3B62CD6C85800EB85F8 /* MegamilChat.framework */;
 			productType = "com.apple.product-type.framework";
 		};
+		59BF5EDE2CFE36EE00A00ADB /* MegamilChatTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 59BF5EE62CFE36EE00A00ADB /* Build configuration list for PBXNativeTarget "MegamilChatTests" */;
+			buildPhases = (
+				59BF5EDB2CFE36EE00A00ADB /* Sources */,
+				59BF5EDC2CFE36EE00A00ADB /* Frameworks */,
+				59BF5EDD2CFE36EE00A00ADB /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				59BF5EE52CFE36EE00A00ADB /* PBXTargetDependency */,
+			);
+			fileSystemSynchronizedGroups = (
+				59BF5EE02CFE36EE00A00ADB /* MegamilChatTests */,
+			);
+			name = MegamilChatTests;
+			packageProductDependencies = (
+			);
+			productName = MegamilChatTests;
+			productReference = 59BF5EDF2CFE36EE00A00ADB /* MegamilChatTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -101,9 +154,13 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
+				LastSwiftUpdateCheck = 1610;
 				LastUpgradeCheck = 1610;
 				TargetAttributes = {
 					593AB3B52CD6C85800EB85F8 = {
+						CreatedOnToolsVersion = 16.1;
+					};
+					59BF5EDE2CFE36EE00A00ADB = {
 						CreatedOnToolsVersion = 16.1;
 					};
 				};
@@ -123,12 +180,20 @@
 			projectRoot = "";
 			targets = (
 				593AB3B52CD6C85800EB85F8 /* MegamilChat */,
+				59BF5EDE2CFE36EE00A00ADB /* MegamilChatTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
 		593AB3B42CD6C85800EB85F8 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		59BF5EDD2CFE36EE00A00ADB /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -145,7 +210,22 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		59BF5EDB2CFE36EE00A00ADB /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		59BF5EE52CFE36EE00A00ADB /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 593AB3B52CD6C85800EB85F8 /* MegamilChat */;
+			targetProxy = 59BF5EE42CFE36EE00A00ADB /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
 		593AB3BF2CD6C85800EB85F8 /* Debug */ = {
@@ -341,6 +421,38 @@
 			};
 			name = Release;
 		};
+		59BF5EE72CFE36EE00A00ADB /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8T5Q694LC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.megamil.MegamilChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		59BF5EE82CFE36EE00A00ADB /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = S8T5Q694LC;
+				GENERATE_INFOPLIST_FILE = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = br.com.megamil.MegamilChatTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -358,6 +470,15 @@
 			buildConfigurations = (
 				593AB3BF2CD6C85800EB85F8 /* Debug */,
 				593AB3C02CD6C85800EB85F8 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		59BF5EE62CFE36EE00A00ADB /* Build configuration list for PBXNativeTarget "MegamilChatTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				59BF5EE72CFE36EE00A00ADB /* Debug */,
+				59BF5EE82CFE36EE00A00ADB /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
