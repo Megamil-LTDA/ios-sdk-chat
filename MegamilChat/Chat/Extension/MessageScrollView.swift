@@ -1,16 +1,19 @@
-//
-//  MessageScrollView.swift
-//  MegamilChat
-//
-//  Created by Eduardo dos santos on 04/11/24.
-//
+    //
+    //  MessageScrollView.swift
+    //  MegamilChat
+    //
+    //  Created by Eduardo dos santos on 04/11/24.
+    //
 import SwiftUI
 
 extension MegamilChatView {
     internal func messageScrollView() -> some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                LazyVStack(alignment: .center) {
+                VStack(spacing: 0) {
+                        // Spacer flexível para empurrar conteúdo para baixo
+                    Spacer(minLength: 0)
+                    
                     if messages.isEmpty && !suggestions.isEmpty {
                         VStack(spacing: 10) {
                             Text("Sugestões")
@@ -38,15 +41,27 @@ extension MegamilChatView {
                         ForEach(messages.indices.reversed(), id: \.self) { index in
                             HStack {
                                 let message = messages[index]
-                                if(message.isFromMe) {
-                                    MessageBubble(message: message, backgroundColor: config.meBubbleColor, textColor: config.meBubbleTextColor)
-                                        .frame(maxWidth: .infinity, alignment: .trailing)
-                                        .scaleEffect(y: -1)
+                                if message.isFromMe {
+                                    MessageBubble(
+                                        message: message,
+                                        backgroundColor: config.meBubbleColor,
+                                        textColor: config.meBubbleTextColor
+                                    )
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .scaleEffect(y: -1)
                                 } else {
-                                    let customMessage = config.themName != "" ? "\(config.themName) \(message.text)" : message.text
-                                    MessageBubble(message: message, customMessage: customMessage, backgroundColor: config.themBubbleColor, textColor: config.themBubbleTextColor)
-                                        .frame(maxWidth: .infinity, alignment: .leading)
-                                        .scaleEffect(y: -1)
+                                    let customMessage = config.themName != ""
+                                    ? "\(config.themName) \(message.text)"
+                                    : message.text
+                                    
+                                    MessageBubble(
+                                        message: message,
+                                        customMessage: customMessage,
+                                        backgroundColor: config.themBubbleColor,
+                                        textColor: config.themBubbleTextColor
+                                    )
+                                    .frame(maxWidth: .infinity, alignment: .leading)
+                                    .scaleEffect(y: -1)
                                 }
                                 
                                 Spacer()
@@ -55,25 +70,27 @@ extension MegamilChatView {
                             .padding(.bottom, 4)
                         }
                     }
-                    .scaleEffect(y: -1)
+                    .scaleEffect(y: -1) // Inverte apenas o LazyVStack
                     .padding(.top, 10)
-                    .onChangeCompat(of: config.messages) { newMessages in
+                    .onChange(of: messages) { newMessages in
                         if let lastMessageIndex = newMessages.indices.last {
                             withAnimation {
                                 scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)
                             }
                         }
                     }
-                    .padding(.bottom, 80)
                 }
-                .frame(maxWidth: .infinity)
+                .frame(height: UIScreen.main.bounds.height - 190)
             }
         }
     }
     
-    
     internal func addSuggestionToMessages(_ suggestion: String) {
-        messages.append(ChatMessage(text: suggestion, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))
+        messages.append(ChatMessage(
+            text: suggestion,
+            timestamp: DateHelper.formatCurrentDateTime(),
+            isFromMe: true
+        ))
         viewModel.sendMessage(message: suggestion) { success, response in
             if success ?? false, let responseMessage = response {
                 messages.append(responseMessage)
