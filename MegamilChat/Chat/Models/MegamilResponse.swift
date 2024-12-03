@@ -26,6 +26,15 @@ public struct MegamilResponse: Codable {
         self.msg = msg
         self.status = status
     }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.data = try? values.decode(MegamilResponseData.self, forKey: .data)
+        self.message = try? values.decode(DecodableUtil.self, forKey: .message).stringValue()
+        self.msg = try? values.decode(DecodableUtil.self, forKey: .msg).stringValue()
+        self.status = try? values.decode(DecodableUtil.self, forKey: .status).intValue()
+    }
+    
 }
 
 // MARK: - MegamilResponseData
@@ -43,5 +52,13 @@ public struct MegamilResponseData: Codable {
         self.audioResponse = audioResponse
         self.question = question
     }
+    
+    public init(from decoder: Decoder) throws {
+        let values = try decoder.container(keyedBy: CodingKeys.self)
+        self.answer = try? values.decode(DecodableUtil.self, forKey: .answer).stringValue()
+        self.audioResponse = try? values.decode(DecodableUtil.self, forKey: .audioResponse).stringValue()
+        self.question = try? values.decode(DecodableUtil.self, forKey: .question).stringValue()
+    }
+    
 }
 

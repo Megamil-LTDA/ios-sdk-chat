@@ -127,6 +127,9 @@ class ChatViewModel: ObservableObject {
             "question":message,
             "history":[]
         ]
+        
+        apiLayer.customizeHeader(customHeader: [["instant": "MegamilChat"]])
+        
         guard let postData = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
         apiLayer.callApi(Method: .POST, endpoint: self.endpoint, postData: postData, query: nil, showLoading: false, completion: { result,_  in
             
