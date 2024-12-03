@@ -15,6 +15,7 @@ public struct MegamilChatView: View {
     @State internal var suggestions: [String] = []
     @State internal var keyboardHeight: CGFloat = 0
     var onClose: (() -> Void)?
+    @State internal var displayedMessages: Set<Int> = []
     private var safeAreaHeight: CGFloat { (hasNotch() && !config.presentationStyle.isFullScreen) ? 34.0 : 0 }
     private var cornerRadius: CGFloat { hasNotch() ? (config.presentationStyle == .floating ? 32 : 60) : 0 }
     

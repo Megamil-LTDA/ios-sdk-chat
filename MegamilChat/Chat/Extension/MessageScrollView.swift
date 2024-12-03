@@ -52,13 +52,17 @@ extension MegamilChatView {
                                     ? "\(config.themName) \(message.text)"
                                     : message.text
                                     
+                                    let shouldShowTypingEffect = !displayedMessages.contains(index)
                                     MessageBubble(
                                         message: message,
                                         customMessage: customMessage,
                                         backgroundColor: config.themBubbleColor,
                                         textColor: config.themBubbleTextColor,
-                                        typingSpeed: config.typingEffect ? 0.035 : nil
+                                        typingSpeed: shouldShowTypingEffect ? (config.typingEffect ? 0.035 : nil) : nil
                                     )
+                                    .onAppear {
+                                        displayedMessages.insert(index)
+                                    }
                                     .frame(maxWidth: .infinity, alignment: .leading)
                                 }
                                 Spacer()
@@ -67,6 +71,7 @@ extension MegamilChatView {
                         }
                     }
                     .padding(.bottom, 10)
+
                 }
                 .onChange(of: messages) { newMessages in
                     if let lastMessageIndex = newMessages.indices.last {
