@@ -13,7 +13,7 @@ struct MessageBubble: View {
     var typingSpeed: Double?
     
     @State private var displayedText = ""
-    @State private var isTyping = false
+    @State private var isTypingStarted = false
     
     var body: some View {
         VStack(alignment: message.isFromMe ? .trailing : .leading) {
@@ -25,13 +25,15 @@ struct MessageBubble: View {
         }
         .padding(.bottom, 4)
         .onAppear {
-            startTypingEffect()
+            if !isTypingStarted {
+                startTypingEffect()
+            }
         }
     }
     
     private func startTypingEffect() {
+        isTypingStarted = true
         guard let typingSpeed = typingSpeed else {
-                // Se a velocidade de digitação não for passada, apenas exibe o texto imediatamente.
             displayedText = customMessage ?? message.text
             return
         }
