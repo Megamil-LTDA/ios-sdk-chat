@@ -10,9 +10,8 @@ extension MegamilChatView {
     internal func messageScrollView() -> some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
-                VStack(spacing: 0) {
-                    Spacer(minLength: 0)
-                    
+                VStack(spacing: 10) {
+                        // Sugestões
                     if messages.isEmpty && !suggestions.isEmpty {
                         VStack(spacing: 10) {
                             Text("Sugestões")
@@ -29,17 +28,18 @@ extension MegamilChatView {
                                     .onTapGesture {
                                         addSuggestionToMessages(suggestion)
                                     }
-                                    .blur(radius: 0.5)
                             }
                         }
                         .frame(maxWidth: .infinity)
                         .padding(.bottom, 10)
                     }
                     
-                    LazyVStack(alignment: .leading) {
-                        ForEach(messages.indices.reversed(), id: \.self) { index in
+                    Spacer(minLength: 0)
+                    
+                    LazyVStack(spacing: 8) {
+                        ForEach(messages.indices, id: \.self) { index in
+                            let message = messages[index]
                             HStack {
-                                let message = messages[index]
                                 if message.isFromMe {
                                     MessageBubble(
                                         message: message,
@@ -47,7 +47,6 @@ extension MegamilChatView {
                                         textColor: config.meBubbleTextColor
                                     )
                                     .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .scaleEffect(y: -1)
                                 } else {
                                     let customMessage = config.themName != ""
                                     ? "\(config.themName) \(message.text)"
@@ -61,29 +60,27 @@ extension MegamilChatView {
                                         typingSpeed: config.typingEffect ? 0.035 : nil
                                     )
                                     .frame(maxWidth: .infinity, alignment: .leading)
-                                    .scaleEffect(y: -1)
                                 }
-                                
                                 Spacer()
                             }
                             .padding(.horizontal, 16)
-                            .padding(.bottom, 4)
                         }
                     }
-                    .scaleEffect(y: -1)
-                    .padding(.top, 10)
-                    .onChange(of: messages) { newMessages in
-                        if let lastMessageIndex = newMessages.indices.last {
-                            withAnimation {
-                                scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)
-                            }
+                    .padding(.bottom, 10)
+                }
+                .onChange(of: messages) { newMessages in
+                    if let lastMessageIndex = newMessages.indices.last {
+                        withAnimation {
+                            scrollProxy.scrollTo(lastMessageIndex, anchor: .bottom)
                         }
                     }
                 }
-                .frame(height: UIScreen.main.bounds.height - 190)
+                .frame(minHeight: UIScreen.main.bounds.height - 190)
             }
         }
     }
+
+
     
     internal func addSuggestionToMessages(_ suggestion: String) {
         messages.append(ChatMessage(
