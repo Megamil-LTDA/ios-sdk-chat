@@ -18,7 +18,7 @@ extension MegamilChatView {
             buttonColor: config.buttonColor,
             borderInputColor: config.listInputBorderColors,
             showInputBorder: config.showInputBorder,
-            borderWidth: 1,
+            borderWidth: 2,
             onSend: {
                 if !messageText.isEmpty && messageText != "" {
                     messages.append(ChatMessage(text: messageText, timestamp: DateHelper.formatCurrentDateTime(), isFromMe: true))

@@ -35,7 +35,7 @@ public struct BorderedColorsView: View {
         self.cornerRadius = cornerRadius
         self.borderWidth = borderWidth
         self.usingAnimation = usingAnimation
-        self.colors = colors
+        self.colors = colors.map { $0.opacity(0.8) }
     }
     
     public var body: some View {
@@ -51,7 +51,7 @@ public struct BorderedColorsView: View {
                         ),
                         lineWidth: borderWidth
                     )
-                    .blur(radius: 3)
+                    .blur(radius: 7)
             )
             .onAppear {
                 if usingAnimation {
@@ -62,8 +62,8 @@ public struct BorderedColorsView: View {
     
     private func startAnimation() {
         DispatchQueue.main.async {
-            Timer.scheduledTimer(withTimeInterval: 0.35, repeats: true) { timer in
-                animationAngle += 0.3
+            Timer.scheduledTimer(withTimeInterval: 0.4, repeats: true) { timer in
+                animationAngle += 0.5
                 if !usingAnimation {
                     timer.invalidate()
                 }

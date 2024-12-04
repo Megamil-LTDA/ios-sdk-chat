@@ -13,7 +13,7 @@ struct ChatInput: View {
     var buttonColor: Color = Color.blue
     var borderInputColor: [Color] = []
     var showInputBorder: Bool = true
-    var borderWidth: CGFloat = 8.0
+    var borderWidth: CGFloat = 1.0
     var onSend: () -> Void
     var onRecord: () -> Void
     var onKeyboardOpen: (Bool) -> Void

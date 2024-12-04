@@ -120,7 +120,7 @@ public struct MegamilChatView: View {
     private func borderView() -> some View {
         BorderedColorsView(
             cornerRadius: cornerRadius,
-            borderWidth: 6,
+            borderWidth: 5,
             usingAnimation: true,
             colors: config.listBorderColors
         )
