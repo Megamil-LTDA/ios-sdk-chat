@@ -35,7 +35,6 @@ public struct MegamilChatView: View {
         ZStack {
             VStack {
                 Spacer()
-                
                 ZStack(alignment: .top) {
                     ZStack {
                         backgroundContentView()

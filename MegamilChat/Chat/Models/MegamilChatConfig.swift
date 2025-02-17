@@ -36,7 +36,7 @@ public struct MegamilChatConfig: Codable {
     public var presentationStyle: PresentationStyle = .fullscreen
     public var typeEndpoints: TypeEndpoints = .MegamilChat
     public var messages: [ChatMessage] = []
-    public var listSuggestions: [String]? // Permite que seja nulo
+    public var listSuggestions: [String]?
     public var placeholder: String = L10n.enterAMessage
     public var sendButtonIcon: String = "paperplane.fill"
     public var recordButtonIcon: String = "mic.fill"
@@ -98,15 +98,30 @@ public struct MegamilChatConfig: Codable {
         presentationStyle = PresentationStyle.fromString(try container.decodeIfPresent(String.self, forKey: .presentationStyle) ?? "fullscreen")
         typeEndpoints = TypeEndpoints.fromString(try container.decodeIfPresent(String.self, forKey: .typeEndpoints) ?? "MegamilChat")
         messages = try container.decodeIfPresent([ChatMessage].self, forKey: .messages) ?? []
-        if let suggestionsString = try container.decodeIfPresent(String.self, forKey: .listSuggestions) {
+        
+        if let suggestionsArray = try? container.decodeIfPresent([String].self, forKey: .listSuggestions) {
+            listSuggestions = suggestionsArray
+        } else if let suggestionsString = try? container.decodeIfPresent(String.self, forKey: .listSuggestions) {
             listSuggestions = suggestionsString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
         }
+        
         placeholder = try container.decodeIfPresent(String.self, forKey: .placeholder) ?? L10n.enterAMessage
         sendButtonIcon = try container.decodeIfPresent(String.self, forKey: .sendButtonIcon) ?? "paperplane.fill"
         recordButtonIcon = try container.decodeIfPresent(String.self, forKey: .recordButtonIcon) ?? "mic.fill"
         buttonColor = Color(hex: try container.decodeIfPresent(String.self, forKey: .buttonColor) ?? "#0000FF")
-        listBorderColors = (try container.decodeIfPresent(String.self, forKey: .listBorderColors)?.split(separator: ",").map { Color(hex: String($0)) }) ?? []
-        listInputBorderColors = (try container.decodeIfPresent(String.self, forKey: .listInputBorderColors)?.split(separator: ",").map { Color(hex: String($0)) }) ?? []
+        
+        if let borderColorsArray = try? container.decodeIfPresent([String].self, forKey: .listBorderColors) {
+            listBorderColors = borderColorsArray.map { Color(hex: $0) }
+        } else if let borderColorsString = try? container.decodeIfPresent(String.self, forKey: .listBorderColors) {
+            listBorderColors = borderColorsString.split(separator: ",").map { Color(hex: String($0)) }
+        }
+        
+        if let inputBorderColorsArray = try? container.decodeIfPresent([String].self, forKey: .listInputBorderColors) {
+            listInputBorderColors = inputBorderColorsArray.map { Color(hex: $0) }
+        } else if let inputBorderColorsString = try? container.decodeIfPresent(String.self, forKey: .listInputBorderColors) {
+            listInputBorderColors = inputBorderColorsString.split(separator: ",").map { Color(hex: String($0)) }
+        }
+        
         ref = try container.decodeIfPresent(String.self, forKey: .ref) ?? ""
         name = try container.decodeIfPresent(String.self, forKey: .name) ?? ""
         contact = try container.decodeIfPresent(String.self, forKey: .contact) ?? ""
@@ -131,13 +146,13 @@ public struct MegamilChatConfig: Codable {
         presentationStyle: String = "fullscreen",
         typeEndpoints: String = "MegamilChat",
         messages: [ChatMessage] = [],
-        listSuggestions: String = "",
+        listSuggestions: Any = "",
         placeholder: String = L10n.enterAMessage,
         sendButtonIcon: String = "paperplane.fill",
         recordButtonIcon: String = "mic.fill",
         buttonColor: String = "#0000FF",
-        listBorderColors: String = "FFFFFFFF,FFFF00FF,FF0000FF",
-        listInputBorderColors: String = "008000FF,0000FFFF,FFA500FF",
+        listBorderColors: Any = "FFFFFFFF,FFFF00FF,FF0000FF",
+        listInputBorderColors: Any = "008000FF,0000FFFF,FFA500FF",
         ref: String = "",
         name: String = "",
         contact: String = "",
@@ -160,13 +175,30 @@ public struct MegamilChatConfig: Codable {
         self.presentationStyle = PresentationStyle.fromString(presentationStyle)
         self.typeEndpoints = TypeEndpoints.fromString(typeEndpoints)
         self.messages = messages
-        self.listSuggestions = listSuggestions.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+        
+        if let suggestionsArray = listSuggestions as? [String] {
+            self.listSuggestions = suggestionsArray
+        } else if let suggestionsString = listSuggestions as? String {
+            self.listSuggestions = suggestionsString.split(separator: ",").map { String($0).trimmingCharacters(in: .whitespaces) }
+        }
+        
         self.placeholder = placeholder
         self.sendButtonIcon = sendButtonIcon
         self.recordButtonIcon = recordButtonIcon
         self.buttonColor = Color(hex: buttonColor)
-        self.listBorderColors = listBorderColors.split(separator: ",").map { Color(hex: String($0)) }
-        self.listInputBorderColors = listInputBorderColors.split(separator: ",").map { Color(hex: String($0)) }
+        
+        if let borderColorsArray = listBorderColors as? [String] {
+            self.listBorderColors = borderColorsArray.map { Color(hex: $0) }
+        } else if let borderColorsString = listBorderColors as? String {
+            self.listBorderColors = borderColorsString.split(separator: ",").map { Color(hex: String($0)) }
+        }
+        
+        if let inputBorderColorsArray = listInputBorderColors as? [String] {
+            self.listInputBorderColors = inputBorderColorsArray.map { Color(hex: $0) }
+        } else if let inputBorderColorsString = listInputBorderColors as? String {
+            self.listInputBorderColors = inputBorderColorsString.split(separator: ",").map { Color(hex: String($0)) }
+        }
+        
         self.ref = ref
         self.name = name
         self.contact = contact
@@ -181,71 +213,3 @@ public struct MegamilChatConfig: Codable {
     }
     
 }
-
-/* Exemplo do json da request
- {
-     "backgroundColor": "#FFFFFF",
-     "canDragging": true,
-     "showBorder": true,
-     "showInputBorder": true,
-     "showReturnButton": false,
-     "themName": "[Megamil Chat]",
-     "presentationStyle": "fullscreen",
-     "typeEndpoints": "MegamilChat",
-     "messages": [
-         {
-         "text": "Olá, sou o Megamil Chat! como posso ajudar?",
-         "timestamp": "05/11/2024 00:00",
-         "isFromMe": false
-         }
-     ],
-     "suggestions": "Sugestão 1...|Sugestão 2...",
-     "placeholder": "Digite uma mensagem...",
-     "sendButtonIcon": "paperplane.fill",
-     "recordButtonIcon": "mic.fill",
-     "buttonColor": "#0000FF",
-     "borderColor": "008000FF,0000FFFF,FF0000FF",
-     "borderInputColor": "FFA500FF,FFC0CBFF",808080FF",
-     "ref": "",
-     "name": "",
-     "contact": "",
-     "baseUrl": "",
-     "endpoint": "",
-     "bearerToken": "0564f2ba7db311ef8c940242ac130004",
-     "allowAudioRecording": false,
-     "meBubbleColor": "#0000FF",
-     "meBubbleTextColor": "#FFFFFF",
-     "themBubbleColor": "#008000",
-     "themBubbleTextColor": "#FFFFFF"
- }
- */
-
-/* Exemplo do json da request base
- {
-     "background_color": "FFFFFFFF",
-     "show_border": true,
-     "show_input_border": true,
-     "them_name": "[Megamil AI]",
-     "placeholder": "Digite uma mensagem...",
-     "send_button_icon": "paperplane.fill",
-     "record_button_icon": "mic.fill",
-     "typing_effect": true,
-     "button_color": "0000FFFF",
-     "allow_audio_recording": false,
-     "me_bubble_color": "0000FFFF",
-     "me_bubble_text_color": "FFFFFFFF",
-     "them_bubble_color": "008000FF",
-     "them_bubble_text_color": "FFFFFFFF",
-     "list_suggestions": "Olá,Como posso ajudar?,Fale mais",
-     "messages": [
-         {
-            "text": "Olá, sou o Megamil Chat! como posso ajudar?",
-            "timestamp": "05/11/2024 00:00",
-            "isFromMe": false
-         }
-     ],
-     "list_border_colors": "FF5733FF,FFC300FF,DAF7A6FF",
-     "list_input_border_colors": "C70039FF,900C3FFF,581845FF",
-     "bearer_token": "0564f2ba7db311ef8c940242ac130004"
- }
- */

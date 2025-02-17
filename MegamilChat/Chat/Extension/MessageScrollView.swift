@@ -10,6 +10,13 @@ extension MegamilChatView {
     internal func messageScrollView() -> some View {
         ScrollViewReader { scrollProxy in
             ScrollView {
+                
+                let addHeight = config.presentationStyle == .fullscreen ? 0.0 :
+                config.presentationStyle == .largeBottomSheet ? 90.0 :
+                config.presentationStyle == .mediumBottomSheet ? 240.0 :
+                config.presentationStyle == .smallBottomSheet ? 350.0 :
+                config.presentationStyle == .floating ? 100.0 : 0.0
+                
                 VStack(spacing: 10) {
                         // Sugestões
                     if messages.isEmpty && !suggestions.isEmpty {
@@ -80,7 +87,7 @@ extension MegamilChatView {
                         }
                     }
                 }
-                .frame(minHeight: UIScreen.main.bounds.height - 190)
+                .frame(minHeight: UIScreen.main.bounds.height - (190 + addHeight) )
             }
         }
     }

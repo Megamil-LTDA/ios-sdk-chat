@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MegamilChat"
-  spec.version      = "0.0.5"
+  spec.version      = "0.0.6"
   spec.summary      = "Connect LLMChat on your app"
   spec.swift_versions = ['5.0']
 
@@ -27,9 +27,9 @@ Pod::Spec.new do |spec|
   #   * Finally, don't worry about the indent, CocoaPods strips it!
   spec.description  = <<-DESC
   Um SDK de chat para integração com LLMChat em sua aplicação iOS, oferecendo suporte para mensagens e comandos de texto.
-                   DESC
+  DESC
 
-  spec.homepage     = "http://llmchat.com.br"
+  spec.homepage     = "https://llmchat.megamil.com.br/#/landingPage"
   # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
 
 
