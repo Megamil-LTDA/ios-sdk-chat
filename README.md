@@ -16,6 +16,32 @@ Seja para integrar assistentes virtuais, suporte ao cliente ou qualquer outra ap
 
 ---
 
+## 📦 Instalação via CocoaPods
+
+Para adicionar o **Megamil Chat** ao seu projeto, siga estes passos:
+
+1. No seu `Podfile`, adicione a seguinte linha:
+
+   ```ruby
+   pod 'MegamilChat'
+   ```
+
+2. No terminal, execute o comando para instalar as dependências:
+
+   ```sh
+   pod install
+   ```
+
+Agora o **Megamil Chat** está pronto para ser usado no seu projeto! 🚀  
+
+### 📂 Exemplos de Uso  
+
+Abaixo, você encontrará mais exemplos de código. No entanto, se quiser testar diretamente, temos dois exemplos prontos na pasta `Samples` usando:  
+- **Storyboard** 📌  
+- **SwiftUI** 🍏  
+
+Basta abrir um dos projetos e rodar para ver o SDK em ação!  
+
 ## 📸 Exemplos de Uso
 
 <p align="center">
