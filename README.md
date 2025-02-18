@@ -19,23 +19,26 @@ Seja para integrar assistentes virtuais, suporte ao cliente ou qualquer outra ap
 ## 📸 Exemplos de Uso
 
 <p align="center">
-  <a href="Samples/prints/sample-1.png">
-    <img src="Samples/prints/sample-1.png" width="150">
+  <a href="Samples/prints/sample-1.PNG">
+    <img src="Samples/prints/sample-1.PNG" width="150">
   </a>
-  <a href="Samples/prints/sample-2.png">
-    <img src="Samples/prints/sample-2.png" width="150">
+  <a href="Samples/prints/sample-2.PNG">
+    <img src="Samples/prints/sample-2.PNG" width="150">
   </a>
-  <a href="Samples/prints/sample-3.png">
-    <img src="Samples/prints/sample-3.png" width="150">
+  <a href="Samples/prints/sample-3.PNG">
+    <img src="Samples/prints/sample-3.PNG" width="150">
   </a>
-  <a href="Samples/prints/sample-4.png">
-    <img src="Samples/prints/sample-4.png" width="150">
+  <a href="Samples/prints/sample-4.PNG">
+    <img src="Samples/prints/sample-4.PNG" width="150">
   </a>
-  <a href="Samples/prints/sample-5.png">
-    <img src="Samples/prints/sample-5.png" width="150">
+  <a href="Samples/prints/sample-5.PNG">
+    <img src="Samples/prints/sample-5.PNG" width="150">
   </a>
-  <a href="Samples/prints/sample-6.png">
-    <img src="Samples/prints/sample-6.png" width="150">
+  <a href="Samples/prints/sample-6.PNG">
+    <img src="Samples/prints/sample-6.PNG" width="150">
+  </a>
+  <a href="Samples/prints/sample-7.PNG">
+    <img src="Samples/prints/sample-7.PNG" width="150">
   </a>
 </p>
 
