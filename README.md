@@ -16,6 +16,30 @@ Seja para integrar assistentes virtuais, suporte ao cliente ou qualquer outra ap
 
 ---
 
+## 📸 Exemplos de Uso
+
+<p align="center">
+  <a href="Samples/prints/sample-1.png">
+    <img src="Samples/prints/sample-1.png" width="150">
+  </a>
+  <a href="Samples/prints/sample-2.png">
+    <img src="Samples/prints/sample-2.png" width="150">
+  </a>
+  <a href="Samples/prints/sample-3.png">
+    <img src="Samples/prints/sample-3.png" width="150">
+  </a>
+  <a href="Samples/prints/sample-4.png">
+    <img src="Samples/prints/sample-4.png" width="150">
+  </a>
+  <a href="Samples/prints/sample-5.png">
+    <img src="Samples/prints/sample-5.png" width="150">
+  </a>
+  <a href="Samples/prints/sample-6.png">
+    <img src="Samples/prints/sample-6.png" width="150">
+  </a>
+</p>
+
+
 ## 🎯 **Como Usar o ClipApp Gratuitamente?**  
 
 Caso não queira integrar o SDK ao seu app, você pode **usar o ClipApp sem programar e sem custos**.  
