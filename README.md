@@ -1,5 +1,31 @@
-# Requests de exemplo:
-<!--Exemplo do json da request completo-->
+# 🗨️ **Megamil Chat** – Chat Inteligente para iOS  
+
+O **Megamil Chat** é uma solução **open-source** para iOS (Swift 5, iOS 15+), que oferece uma interface de chat completa, moderna e altamente customizável.  
+
+Seja para integrar assistentes virtuais, suporte ao cliente ou qualquer outra aplicação baseada em chat, este SDK fornece uma experiência fluida e personalizável com diversas opções de exibição e configuração.  
+
+---
+
+## 🚀 **Principais Recursos**  
+
+✅ **Interface Completa** – Balões de conversa prontos, suporte a listas de sugestões, i18n e muito mais.  
+🎨 **Totalmente Customizável** – Personalize cores, bordas, inputs, botões, fontes e layouts.  
+📱 **Diferentes Modos de Exibição** – Use como **BottomSheet, tela cheia ou tela flutuante**.  
+🔗 **Fácil Integração** – Comunicação via APIs externas ou diretamente com a OpenAI, Megamil Chat, ou a sua própria.  
+🆓 **Modo ClipApp (sem programação)** – Para quem não quer codificar, basta gerar um JSON com os dados desejados e usá-lo diretamente no ClipApp, sem custos.  
+
+---
+
+## 🎯 **Como Usar o ClipApp Gratuitamente?**  
+
+Caso não queira integrar o SDK ao seu app, você pode **usar o ClipApp sem programar e sem custos**.  
+
+Basta preencher um JSON com as configurações desejadas, convertê-lo para Base64 e usá-lo em uma das URLs fornecidas. Isso permite o uso imediato do chatbot sem necessidade de desenvolvimento adicional.  
+
+👉 Veja mais detalhes abaixo na documentação.  
+
+# Requests de exemplo completa:
+<!--Exemplo do json da request completo, os mesmos campos existem em swift, mas com o padrão `camelCase`-->
 ```json
  {
      "background_color": "#FFFFFF",
@@ -49,7 +75,7 @@
 - **`typing_effect`** *(boolean)* → Habilita efeito de digitação nas mensagens enviadas pelo bot.  
 - **`them_name`** *(string)* → Nome do chatbot ou do agente da conversa.  
 - **`presentation_style`** *(string)* → Define o estilo de apresentação do chat. Exemplo: `"fullscreen"` para tela cheia. `largebottomsheet`, `mediumbottomsheet` e `smallbottomsheet` para Bottom sheets em tamanhos diversos e por fim `floating` para aparecer fluturando 
-- **`type_endpoints`** *(string)* → Tipo de endpoint que será utilizado na comunicação, aceitando `OpenAI` para usar API oficial da OpenAI, `MegamilChat` para usar API do nosso serviço e por fim `CustomURL` para usar um API própria, requer informar campos `base_url`, `endpoint` e `bearer_token`.   
+- **`type_endpoints`** *(string)* → Tipo de endpoint que será utilizado na comunicação, Aceita três opções: OpenAI para conexão direta com a API da OpenAI, MegamilChat para usar nossa API e CustomURL para definir sua própria API personalizada, requerendo informar campos `base_url`, `endpoint` e `bearer_token`.   
 - **`messages`** *(array de objetos)* → Lista de mensagens predefinidas no chat.  
   - **`text`** *(string)* → Conteúdo da mensagem.  
   - **`timestamp`** *(string)* → Data e hora no formato `"dd/MM/yyyy HH:mm"`.  
@@ -75,17 +101,119 @@
 
 Alguns atributos só funcionarão quando o chat for chamado dentro da sua aplicação. No `AppClips`, certas funcionalidades, especialmente as relacionadas à apresentação da tela e ao botão de voltar, podem não estar disponíveis.  
 
-### Exemplo de JSON mínimo para uso com API de terceiros  
+## Exemplos de uso mais básico no swift  
+
+### 1. Criando uma configuração básica  
+Se deseja utilizar os valores padrão para todos os campos, exceto o `bearerToken`, que é obrigatório para autenticação no **Megamil Chat**, use:  
+
+```swift
+let config = MegamilChatConfig(
+    bearerToken: "..." // Token de autenticação obrigatório para requisições
+)
+```
+
+### 2. Configurando para uso direto com a OpenAI  
+Caso queira utilizar a OpenAI diretamente, basta alterar o `typeEndpoints` para `"OpenAI"` e fornecer um token válido:  
+
+```swift
+let config = MegamilChatConfig(
+    typeEndpoints: "OpenAI",
+    bearerToken: "sk-proj-GGk...SSj4YA" // Token de autenticação obrigatório para requisições
+)
+```
+
+### 3. Configurando para uso customizado
+Caso queira utilizar sua API customizada diretamente, basta alterar o `typeEndpoints` para `"CustomURL"` e fornecer os dados:  
+
+```swift
+let config = MegamilChatConfig(
+    baseUrl: "https://SUA_URL/",
+    typeEndpoints: "CustomURL",
+    endpoint: "SEU_ENDPOINT",
+    bearerToken: "SEU_BEARER_TOKEN"
+)
+```
+
+### 4. Criando a configuração a partir de um JSON  
+Se estiver recebendo a configuração de uma API como um JSON em formato de string, o parse pode ser feito da seguinte forma:  
+
+```swift
+let jsonData = dataRaw.data(using: .utf8)!
+let jsonDecoder = JSONDecoder()
+let config = try! jsonDecoder.decode(MegamilChatConfig.self, from: jsonData)
+```
+
+# Quero usar com minha própria API
+
+## 🔄 **O Que o Backend Deve Esperar Como Requisição?**  
+
+O **Megamil Chat** envia os seguintes dados no **corpo (body) da requisição** ao backend configurado:  
+
 ```json
 {
-    "base_url": "https://SUA_URL/",
-    "type_endpoints": "CustomURL",
-    "endpoint": "SEU_ENDPOINT",
-    "bearer_token": "SEU_BEARER_TOKEN"
+    "ref": "12345",       // (Opcional) Identificador único do usuário
+    "name": "João Silva", // (Opcional) Nome do usuário
+    "contact": "joao@email.com", // (Opcional) Contato do usuário (e-mail, telefone, etc.)
+    "question": "Qual o horário de funcionamento?" // (Obrigatório) Pergunta enviada pelo usuário
+}
+```  
+
+### 📌 **Detalhes dos Campos**  
+
+- **`question`** (Obrigatório) → Contém a mensagem enviada pelo usuário e deve ser processada pelo backend para gerar uma resposta.  
+- **`ref`** (Opcional) → Pode ser utilizado para identificar o usuário na base de dados do backend, como um ID interno da aplicação.  
+- **`name` e `contact`** (Opcionais) → Caso a aplicação que usa o SDK solicite esses dados, eles serão repassados ao backend para facilitar a identificação do usuário.  
+
+---
+
+## 🏷️ **Informação Adicional no Header**  
+
+Além do body, o SDK também envia no **header da requisição** a seguinte chave:  
+
+```http
+instant: MegamilChat
+```  
+
+Esse valor pode ser utilizado pelo backend para identificar que a requisição veio do **Megamil Chat** e aplicar qualquer lógica específica com base nessa informação.
+
+## 📌 Formato esperado da resposta da API  
+
+A API retorna um objeto JSON contendo as informações da resposta do chatbot. Abaixo está o formato esperado:  
+
+```json
+{
+    "status": true,
+    "message": "Essa é a resposta da IA.",
+    "msg": "Mensagem da api",
+    "data": {
+        "answer": "Essa é a resposta da IA, em outro local",
+        "audio_response": "base64 do audio",
+        "question": "Pergunta do usuário"
+    }
 }
 ```
 
-## Como usar no ClipApps da LLMCHAT gratuitamente  
+### 📝 Detalhes dos Campos  
+
+| Campo            | Tipo     | Obrigatório | Descrição |
+|-----------------|---------|------------|-----------|
+| `status`        | `Bool`  | ✅ Sim      | Indica se a requisição foi processada corretamente. |
+| `message`       | `String` | ⚠️ Não (se `answer` estiver presente) | Resposta da IA retornada diretamente no nível superior do JSON. |
+| `msg`           | `String` | ❌ Não      | Mensagem adicional da API (pode ser um log ou erro). |
+| `data.answer`   | `String` | ⚠️ Não (se `message` estiver presente) | Resposta da IA dentro do objeto `data`. |
+| `data.audio_response` | `String` | ❌ Não | Resposta em áudio da IA, codificada em Base64. |
+| `data.question` | `String` | ❌ Não | Pergunta original enviada pelo usuário. |
+
+## 🔄 Regras de preenchimento  
+- O campo `message` **não é obrigatório** se `answer` estiver presente, e vice-versa.  
+- Se `data.answer` existir, ele será priorizado sobre `message`.  
+- `msg` pode conter uma mensagem informativa da API, como logs ou detalhes adicionais.  
+- `audio_response` pode ser usado para fornecer uma resposta em áudio codificada em Base64.  
+- `question` pode ser preenchido com a pergunta original enviada pelo usuário.  
+
+Esse formato garante flexibilidade ao lidar com diferentes tipos de resposta da IA.
+
+# 📌 Como usar no ClipApps da LLMCHAT gratuitamente  
 Para utilizar no ClipApps, o JSON deve ser convertido para **Base64** e passado como parâmetro na URL usando a query `config`:  
 
 ```
@@ -115,3 +243,7 @@ swiftgen
 # TODOs
 * Permitir escolha de modelo ao chamar API da OpenAI
 * Aceitar envio e recebimento de Audios, já está preparado na request, mas ainda não foi implementado.
+
+---
+
+O **Megamil Chat** facilita a implementação de experiências de chat avançadas no seu app, proporcionando flexibilidade e personalização para diferentes necessidades.

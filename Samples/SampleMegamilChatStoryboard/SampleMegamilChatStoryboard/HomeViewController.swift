@@ -40,14 +40,26 @@ class HomeViewController: UIViewController {
     }
     
     private func presentChatViewController(presentationStyle: PresentationStyle, forcePush: Bool = false) {
-        
-// Exemplo rápido: Usando os outros valores como default, passando o bearer token para Megamil Chat.
-//            let config = MegamilChatConfig(
-//                bearerToken: "..." /* Token de autenticação para requisições OBRIGATÓRIO*/
-//            )
-        
-        //Exemplo completo, customizando todos os campos
-        // Cria a configuração com os dados necessários
+    
+        // Exemplo rápido: Utilizando os valores padrão para todos os campos, exceto o bearer token,
+        // que é obrigatório para autenticação no Megamil Chat:
+        // let config = MegamilChatConfig(
+        //     bearerToken: "..." // Token de autenticação obrigatório para requisições
+        // )
+    
+        // Exemplo rápido: Utilizando os valores padrão para todos os campos, exceto o bearer token,
+        // para usar direto a OpenAI:
+        //  let config = MegamilChatConfig(
+        //     typeEndpoints: "OpenAI",
+        //     bearerToken: "sk-proj-GGk...SSj4YA" // Token de autenticação obrigatório para requisições
+        // )
+    
+        // Exemplo de parsing de JSON vindo de uma API, assumindo que `dataRaw` contém o JSON em formato de string.
+        // let jsonData = dataRaw.data(using: .utf8)!
+        // let jsonDecoder = JSONDecoder()
+        // let config = try! jsonDecoder.decode(MegamilChatConfig.self, from: jsonData)
+    
+        // Exemplo completo: Personalizando todos os campos e criando a configuração com os dados necessários.
         let config = MegamilChatConfig(
             backgroundColor: "#FFFFFF", /* Cor do background da view principal */
             canDragging: true, /* Permitir arrastar a view (modo Bottom sheet) */
@@ -58,9 +70,9 @@ class HomeViewController: UIViewController {
             presentationStyle: presentationStyle.rawValue, /* Tipo de apresentação: fullscreen | largeBottomSheet | mediumBottomSheet | smallBottomSheet | floating */
             typeEndpoints: TypeEndpoints.MegamilChat.rawValue, /* Tipo de serviço de endpoints: OpenAI | MegamilChat | CustomURL */
             messages: [ /* Histórico inicial de mensagens a ser exibido */
-                ChatMessage(text: "Olá, sou o Megamil Chat!", timestamp: "05/11/2024 00:00", isFromMe: true)
+                //ChatMessage(text: "Olá, sou o Megamil Chat!", timestamp: "05/11/2024 00:00", isFromMe: true)
             ],
-            listSuggestions: [ /* Sugestões iniciais de perguntas (exibidas apenas quando não há histórico de mensagens) */
+            listSuggestions: [ /* Sugestões iniciais de perguntas (exibidas apenas quando não há histórico de mensagens), Aceita tanto uma string com valores separados por vírgulas quanto um array de strings. */
                 "🕢 Qual horário de funcionamento?",
                 "💲 Qual o valor da mensalidade?",
                 "🗺️ Qual o endereço da loja?",
@@ -70,8 +82,8 @@ class HomeViewController: UIViewController {
             sendButtonIcon: "paperplane.fill", /* Ícone do botão de enviar mensagem */
             recordButtonIcon: "mic.fill", /* Ícone do botão de gravação de áudio */
             buttonColor: "#0000FF", /* Cor dos botões de enviar e gravar */
-            listBorderColors: ["#008000", "#0000FF", "#FF0000"], /* Cores das bordas externas da view */
-            listInputBorderColors: ["#FFA500", "#FFC0CB", "#808080"], /* Cores das bordas do campo de input */
+            listBorderColors: ["#008000", "#0000FF", "#FF0000"], /* Cores das bordas externas da view, Aceita tanto uma string com valores separados por vírgulas quanto um array de strings. */
+            listInputBorderColors: "#FFA500,#FFC0CB,#808080", /* Cores das bordas do campo de input, Aceita tanto uma string com valores separados por vírgulas quanto um array de strings. */
             ref: "", /* Referência adicional para o usuário (opcional) */
             name: "", /* Nome do usuário (opcional) */
             contact: "", /* Contato do usuário (opcional) */

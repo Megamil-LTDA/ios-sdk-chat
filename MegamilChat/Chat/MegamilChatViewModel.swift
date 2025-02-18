@@ -68,7 +68,7 @@ class ChatViewModel: ObservableObject {
         
         let apiLayer = ApiLayer(URL_BASE: self.baseUrl, Bearer: self.bearerToken, allowedSHAFingerprints: allowedSHAFingerprints)
         let params: [String: Any] = [
-            "model": "gpt-4o-mini",
+            "model": "gpt-4o-mini", //@todo parametrizar
             "messages": [["role": "user", "content": message]]
         ]
         guard let postData = try? JSONSerialization.data(withJSONObject: params, options: []) else {return}
@@ -125,7 +125,7 @@ class ChatViewModel: ObservableObject {
             "name": name,
             "contact": contact,
             "question":message,
-            "history":[]
+            "history":[] //@todo
         ]
         
         apiLayer.customizeHeader(customHeader: [["instant": "MegamilChat"]])

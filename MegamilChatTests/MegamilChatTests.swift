@@ -133,4 +133,38 @@ final class MegamilChatConfigTests: XCTestCase {
         }
     }
     
+    func testMegamilResponseDecoding() {
+        let json = """
+        {
+            "status": true,
+            "message": "Essa é a resposta da IA.",
+            "msg": "Mensagem da api",
+            "data": {
+                "answer": "Essa é a resposta da IA, em outro local",
+                "audio_response": "base64 do audio",
+                "question": "Pergunta do usuário"
+            }
+        }
+        """
+        
+        let jsonData = json.data(using: .utf8)!
+        let jsonDecoder = JSONDecoder()
+        
+        do {
+            let response = try jsonDecoder.decode(MegamilResponse.self, from: jsonData)
+            
+            XCTAssertEqual(response.status, 1)
+            XCTAssertEqual(response.message, "Essa é a resposta da IA.")
+            XCTAssertEqual(response.msg, "Mensagem da api")
+            
+            XCTAssertNotNil(response.data)
+            XCTAssertEqual(response.data?.answer, "Essa é a resposta da IA, em outro local")
+            XCTAssertEqual(response.data?.audioResponse, "base64 do audio")
+            XCTAssertEqual(response.data?.question, "Pergunta do usuário")
+            
+        } catch {
+            XCTFail("Falha ao decodificar MegamilResponse: \(error)")
+        }
+    }
+    
 }
