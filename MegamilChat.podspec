@@ -16,7 +16,7 @@ Pod::Spec.new do |spec|
   #
 
   spec.name         = "MegamilChat"
-  spec.version      = "1.0.0"
+  spec.version      = "1.0.1"
   spec.summary      = "Connect LLMChat on your app"
   spec.swift_versions = ['5.0']
 
@@ -28,9 +28,9 @@ Pod::Spec.new do |spec|
   spec.description  = <<-DESC
   Um SDK de chat para integração com LLMChat em sua aplicação iOS, oferecendo suporte para mensagens e comandos de texto.
   DESC
-
+  spec.readme = "README.md"
   spec.homepage     = "https://llmchat.megamil.com.br/#/landingPage"
-  # spec.screenshots  = "www.example.com/screenshots_1.gif", "www.example.com/screenshots_2.gif"
+  spec.screenshots  = "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-1.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-2.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-3.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-4.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-5.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-6.PNG?raw=true", "https://github.com/Megamil-LTDA/ios-sdk-chat/blob/main/Samples/prints/sample-7.PNG?raw=true"
 
 
   # ―――  Spec License  ――――――――――――――――――――――――――――――――――――――――――――――――――――――――――― #
